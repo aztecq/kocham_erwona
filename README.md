@@ -1,0 +1,1 @@
+![Screenshot](zasady.png)
