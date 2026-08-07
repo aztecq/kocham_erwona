@@ -85,9 +85,10 @@ func _input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			var global_mouse_pos = get_global_mouse_position()
 			var local_mouse_pos = $Layer4.to_local(global_mouse_pos)
-			var map_coords = $Layer4.local_to_map(local_mouse_pos)
-			var layerIndex = highmap[map_coords.y][map_coords.x]
+			var grid_position = $Layer4.local_to_map(local_mouse_pos)
+			var layer_index = highmap[grid_position.y][grid_position.x]
 			
+<<<<<<< Updated upstream
 			all_layers[layerIndex][map_coords.y][map_coords.x] = TileTypes.Type.NONE
 			highmap[map_coords.y][map_coords.x] = highmap[map_coords.y][map_coords.x] - 1;
 			var tile = dualGrid.get_tile(layerIndex, 
