@@ -1,17 +1,13 @@
 class_name StructureGenerator extends Node
 
-enum StructureType { House, Castle }
-enum TileType { DIRT, SAND, BEDROCK, HUMUS, FLOOR, WALL }
 
 static func create_structure():
 	var floor = create_floor()
 	var floor_border = get_border_cells(floor)
 	#var walls = create_walls(floor_border)
-
  
 static func create_walls(floor_borders: Array[Array]):
 	pass
-
 
 static func create_floor():
 	var room1 = Rect2i(0, 0, randi_range(3, 6), randi_range(3, 6))
@@ -40,12 +36,10 @@ static func create_floor():
 			for x in range(r.position.x + 1, r.end.x + 1):
 				grid[y][x] = 1
 	return grid
-	
 
 static func is_intersection_valid(r1: Rect2i, r2: Rect2i) -> bool:
 	var intersect_area = r1.intersection(r2).get_area()
 	return intersect_area > 0 and intersect_area < r1.get_area() and intersect_area < r2.get_area()
-	
 	
 const NEIGHBORS_8 := [
 	Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
