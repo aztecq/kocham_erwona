@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d13g3j3qibymt"
-path="res://.godot/imported/dla_bartolla.png-5edacbf70f4becc88c6dd3c409b70d67.ctex"
+uid="uid://cg2l1qf76ixu5"
+path="res://.godot/imported/pierscionek.png-1981ba30a57a36c29539f21612f61ee4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/dla_bartolla.png"
-dest_files=["res://.godot/imported/dla_bartolla.png-5edacbf70f4becc88c6dd3c409b70d67.ctex"]
+source_file="res://images/artifacts/pierscionek.png"
+dest_files=["res://.godot/imported/pierscionek.png-1981ba30a57a36c29539f21612f61ee4.ctex"]
 
 [params]
 

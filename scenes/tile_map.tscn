@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cxm2ph6tkqf2q"]
 
 [ext_resource type="Script" uid="uid://udom6hlpqe0t" path="res://scripts/tile_map.gd" id="1_tjuek"]
-[ext_resource type="Texture2D" uid="uid://d13g3j3qibymt" path="res://images/dla_bartolla.png" id="2_47enk"]
+[ext_resource type="Texture2D" uid="uid://d13g3j3qibymt" path="res://images/tilemap/dla_bartolla.png" id="2_47enk"]
 [ext_resource type="Script" uid="uid://dal007c0v6uuh" path="res://Terra Nie ruszac/DualGrid.gd" id="3_jx7lj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jx7lj"]

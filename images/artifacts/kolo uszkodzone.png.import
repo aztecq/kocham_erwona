@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1lpxsvsc51b8"
-path="res://.godot/imported/ewron dwukropek trzy.png-871e696048731cebe2459b5f00eed2c6.ctex"
+uid="uid://chuuuwt3k3eki"
+path="res://.godot/imported/kolo uszkodzone.png-6991815a8f55801c9479e82f008134e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/ewron dwukropek trzy.png"
-dest_files=["res://.godot/imported/ewron dwukropek trzy.png-871e696048731cebe2459b5f00eed2c6.ctex"]
+source_file="res://images/artifacts/kolo uszkodzone.png"
+dest_files=["res://.godot/imported/kolo uszkodzone.png-6991815a8f55801c9479e82f008134e3.ctex"]
 
 [params]
 

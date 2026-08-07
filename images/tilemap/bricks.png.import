@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw1bv2uomih1t"
-path="res://.godot/imported/noz uszkodzony.png-431de5b1c046c52a729efd97b85e6973.ctex"
+uid="uid://c028kuq3u0rhg"
+path="res://.godot/imported/bricks.png-5b2b168e2bd47ca378af3deea26e268b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/noz uszkodzony.png"
-dest_files=["res://.godot/imported/noz uszkodzony.png-431de5b1c046c52a729efd97b85e6973.ctex"]
+source_file="res://images/tilemap/bricks.png"
+dest_files=["res://.godot/imported/bricks.png-5b2b168e2bd47ca378af3deea26e268b.ctex"]
 
 [params]
 

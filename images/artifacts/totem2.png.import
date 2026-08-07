@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcfo4a8g3uq0t"
-path="res://.godot/imported/kosc1.png-f87807a10748aa3eebbdb376461e0c0b.ctex"
+uid="uid://bs3m5hgv8taxf"
+path="res://.godot/imported/totem2.png-c45e7b4f83b58f80cd7588017cd34000.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/kosc1.png"
-dest_files=["res://.godot/imported/kosc1.png-f87807a10748aa3eebbdb376461e0c0b.ctex"]
+source_file="res://images/artifacts/totem2.png"
+dest_files=["res://.godot/imported/totem2.png-c45e7b4f83b58f80cd7588017cd34000.ctex"]
 
 [params]
 

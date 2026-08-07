@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cg2l1qf76ixu5"
-path="res://.godot/imported/pierscionek.png-5e3fae6b1750584e70c53f4a40d4a08a.ctex"
+uid="uid://c1lpxsvsc51b8"
+path="res://.godot/imported/ewron dwukropek trzy.png-69c9663b0f0ced940802b9e930221d84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/pierscionek.png"
-dest_files=["res://.godot/imported/pierscionek.png-5e3fae6b1750584e70c53f4a40d4a08a.ctex"]
+source_file="res://images/artifacts/ewron dwukropek trzy.png"
+dest_files=["res://.godot/imported/ewron dwukropek trzy.png-69c9663b0f0ced940802b9e930221d84.ctex"]
 
 [params]
 

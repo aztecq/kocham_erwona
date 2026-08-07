@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chuuuwt3k3eki"
-path="res://.godot/imported/kolo uszkodzone.png-be7c21be004c6a513feaf004b8d22d21.ctex"
+uid="uid://w2cjk2kcu6xt"
+path="res://.godot/imported/totem1.png-04183c804d228be3aa896ec062e61b4d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/kolo uszkodzone.png"
-dest_files=["res://.godot/imported/kolo uszkodzone.png-be7c21be004c6a513feaf004b8d22d21.ctex"]
+source_file="res://images/artifacts/totem1.png"
+dest_files=["res://.godot/imported/totem1.png-04183c804d228be3aa896ec062e61b4d.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cs2vkq7sgdnre"
-path="res://.godot/imported/ground.png-d6215276157ad844710057a2579c5395.ctex"
+uid="uid://dg4bsvek4fifv"
+path="res://.godot/imported/grot2.png-82b8bcc2a5b9a8401f5bb8f2e3562b6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ground.png"
-dest_files=["res://.godot/imported/ground.png-d6215276157ad844710057a2579c5395.ctex"]
+source_file="res://images/artifacts/grot2.png"
+dest_files=["res://.godot/imported/grot2.png-82b8bcc2a5b9a8401f5bb8f2e3562b6b.ctex"]
 
 [params]
 

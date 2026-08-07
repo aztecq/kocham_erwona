@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg4bsvek4fifv"
-path="res://.godot/imported/grot2.png-b5dce56d05f6fe03058c7efd82f4eeeb.ctex"
+uid="uid://d2cpcxbi44xb5"
+path="res://.godot/imported/kolo.png-6416678487717717d1752d4e98337201.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artefakty/grot2.png"
-dest_files=["res://.godot/imported/grot2.png-b5dce56d05f6fe03058c7efd82f4eeeb.ctex"]
+source_file="res://images/artifacts/kolo.png"
+dest_files=["res://.godot/imported/kolo.png-6416678487717717d1752d4e98337201.ctex"]
 
 [params]
 
