@@ -95,7 +95,32 @@ func _input(event: InputEvent) -> void:
 			all_layers[layerIndex][map_coords.y][map_coords.x],
 			all_layers[layerIndex][map_coords.y][map_coords.x],
 			all_layers[layerIndex][map_coords.y][map_coords.x]])
+=======
+			all_layers[layer_index][grid_position.y][grid_position.x] = TileTypes.Type.NONE
+			highmap[grid_position.y][grid_position.x] = highmap[grid_position.y][grid_position.x] - 1;
+			#var tile = dualGrid.get_tile(layerIndex, 
+			#[all_layers[layerIndex][map_coords.y -1][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x]])
+>>>>>>> Stashed changes
 			
-			tilemap_layers[layerIndex].set_cell(map_coords, -1)
+			tilemap_layers[layer_index].set_cell(grid_position, -1)
 			
 			
+<<<<<<< Updated upstream
+=======
+func _edit_terrain(layer_index: int,grid_position: Vector2i, fragment_size: Vector2i) -> void:
+	var _y = fragment_size.y - 1
+	for y in _y:
+		var _x = fragment_size.x - 1
+		for x in _x:
+			var tile = dualGrid.get_tile(layer_index, 
+			[all_layers[layer_index][y][x],
+			all_layers[layer_index][y+1][x],
+			all_layers[layer_index][y][x+1],
+			all_layers[layer_index][y+1][x+1]])
+			
+			tilemap_layers[layer_index].set_cell(grid_position + Vector2i(y - _y/2,x - _x/2), tile)
+			
+>>>>>>> Stashed changes
