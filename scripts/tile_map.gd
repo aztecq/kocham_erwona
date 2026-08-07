@@ -7,6 +7,7 @@ var tilemap_layers = [$Layer1, $Layer2, $Layer3, $Layer4]
 var all_layers = []
 var highmap = []
 @export var dualGrid: DualGrid
+
 func _ready() -> void:
 	all_layers = create_3d_array(types)
 	highmap = create_2d_array(width, height)
@@ -16,13 +17,10 @@ func _ready() -> void:
 	for i in tilemap_layers.size():
 		generate_terrain(all_layers[i], tilemap_layers[i])	
 	
-	
 func inicialize_values_highmap(number_of_layers: int) -> void:
 	for y in highmap.size():
 		for x in highmap[y].size():
 			highmap[y][x] = number_of_layers
-		
-	
 
 func create_2d_array(_x: int, _y: int) -> Array:
 	var result := []
@@ -78,7 +76,6 @@ func get_texture_coords(type: TileTypes.Type):
 		_: 
 			texture = Vector2i(0,0)
 	return texture
-	
 
 func _process(delta: float) -> void:
 	pass
@@ -100,7 +97,5 @@ func _input(event: InputEvent) -> void:
 			all_layers[layerIndex][map_coords.y][map_coords.x]])
 			
 			tilemap_layers[layerIndex].set_cell(map_coords, -1)
-			
-			
 			
 			
