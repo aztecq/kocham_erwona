@@ -2,7 +2,7 @@ extends Node2D
 
 var width: int = 20
 var height: int = 20
-var types = [tile_types.BEDROCK, tile_types.SAND, tile_types.ROCK, tile_types.DIRT, tile_types.BRICKS]
+var types = [tile_types.BEDROCK,tile_types.ROCK, tile_types.SAND,  tile_types.DIRT]
 var all_layers = []
 
 func insert_structure(at_layer: int = 0):
@@ -76,11 +76,18 @@ func _process(delta: float) -> void:
 	pass
 	
 	
-	
-func _input(e: InputEvent):
-	if e is InputEventMouseButton:
-		if e.button_index == MOUSE_BUTTON_LEFT && e.pressed:
-			var layers = get_children()
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var global_mouse_pos = get_global_mouse_position()
+			var local_mouse_pos = $Layer4.to_local(global_mouse_pos)
+			var map_coords = $Layer4.local_to_map(local_mouse_pos)
+			if $Layer2.get_cell_source_id(map_coords) == -1:
+				$Layer1.set_cell(map_coords, -1)
+			elif $Layer3.get_cell_source_id(map_coords) == -1:
+				$Layer2.set_cell(map_coords, -1)
+			elif $Layer4.get_cell_source_id(map_coords) == -1:
+				$Layer3.set_cell(map_coords, -1)
+			else:
+				$Layer4.set_cell(map_coords, -1)
 			
-			layers[layers.size()-1].queue_free()
-			print('xd')

@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://udom6hlpqe0t" path="res://scripts/tile_map.gd" id="1_tjuek"]
 [ext_resource type="Texture2D" uid="uid://d13g3j3qibymt" path="res://images/dla_bartolla.png" id="2_47enk"]
+[ext_resource type="Script" uid="uid://cmxvmyb0fog71" path="res://scripts/layer_3.gd" id="3_dohrl"]
+[ext_resource type="Script" uid="uid://cbhya77uelasm" path="res://scripts/layer_4.gd" id="4_f6fy2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jx7lj"]
 texture = ExtResource("2_47enk")
@@ -29,6 +31,8 @@ tile_set = SubResource("TileSet_bwv4p")
 
 [node name="Layer3" type="TileMapLayer" parent="." unique_id=1258384744]
 tile_set = SubResource("TileSet_bwv4p")
+script = ExtResource("3_dohrl")
 
 [node name="Layer4" type="TileMapLayer" parent="." unique_id=62959972]
 tile_set = SubResource("TileSet_bwv4p")
+script = ExtResource("4_f6fy2")

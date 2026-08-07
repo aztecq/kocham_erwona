@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkfx22fudiri6"]
 
-[ext_resource type="Script" uid="uid://bqkasyb0b37t0" path="res://scenes/dual_grid_test.gd" id="1_pj1vg"]
+[ext_resource type="Script" uid="uid://bqkasyb0b37t0" path="res://scripts/dual_grid_test.gd" id="1_pj1vg"]
 
 [node name="DualGridTest" type="Node2D" unique_id=1166800393 node_paths=PackedStringArray("display")]
 script = ExtResource("1_pj1vg")
