@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://cxm2ph6tkqf2q"]
+
+[ext_resource type="Script" uid="uid://udom6hlpqe0t" path="res://scripts/tile_map.gd" id="1_tjuek"]
+[ext_resource type="Texture2D" uid="uid://d13g3j3qibymt" path="res://images/dla_bartolla.png" id="2_47enk"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jx7lj"]
+texture = ExtResource("2_47enk")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bwv4p"]
+sources/1 = SubResource("TileSetAtlasSource_jx7lj")
+
+[node name="TileMap" type="Node2D" unique_id=1844241174]
+script = ExtResource("1_tjuek")
+
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=637708678]
+tile_set = SubResource("TileSet_bwv4p")
+
+[node name="Layer2" type="TileMapLayer" parent="." unique_id=124653194]
+tile_set = SubResource("TileSet_bwv4p")
+
+[node name="Layer3" type="TileMapLayer" parent="." unique_id=1258384744]
+tile_set = SubResource("TileSet_bwv4p")
+
+[node name="Layer4" type="TileMapLayer" parent="." unique_id=62959972]
+tile_set = SubResource("TileSet_bwv4p")
