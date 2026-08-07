@@ -1,6 +1,7 @@
+class_name DualGrid
+
 extends Node2D
 
-var tile_0
 @export var tiles_sets: Array[Array]
 
 var neighbours_to_index: Dictionary = {
@@ -24,9 +25,6 @@ var neighbours_to_index: Dictionary = {
 	[false, true,  true,  true]: 14,
 	[true,  true,  true,  true]: 15,
 }
-
-func _ready() -> void:
-	pass 
 
 func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> TileData:
 
