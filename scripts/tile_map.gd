@@ -93,11 +93,11 @@ func _input(event: InputEvent) -> void:
 			
 			all_layers[layerIndex][map_coords.y][map_coords.x] = TileTypes.Type.NONE
 			highmap[map_coords.y][map_coords.x] = highmap[map_coords.y][map_coords.x] - 1;
-			var tile = dualGrid.get_tile(layerIndex, 
-			[all_layers[layerIndex][map_coords.y -1][map_coords.x],
-			all_layers[layerIndex][map_coords.y][map_coords.x],
-			all_layers[layerIndex][map_coords.y][map_coords.x],
-			all_layers[layerIndex][map_coords.y][map_coords.x]])
+			#var tile = dualGrid.get_tile(layerIndex, 
+			#[all_layers[layerIndex][map_coords.y -1][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x],
+			#all_layers[layerIndex][map_coords.y][map_coords.x]])
 			
 			tilemap_layers[layerIndex].set_cell(map_coords, -1)
 			
