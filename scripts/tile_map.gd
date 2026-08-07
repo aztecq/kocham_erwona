@@ -1,9 +1,21 @@
 extends Node2D
 
+enum TileType { NONE, DIRT, SAND, ROCK, BEDROCK, BRICKS }
+
 var width: int = 20
 var height: int = 20
-var types = [tile_types.BEDROCK,tile_types.ROCK, tile_types.SAND,  tile_types.DIRT]
+var types : Array[TileType] = [TileType.BEDROCK,TileType.ROCK, TileType.SAND,  TileType.DIRT]
 var all_layers = []
+
+func _ready() -> void:
+	all_layers = create_3d_array(types)
+	var tilemap_layers = [$Layer1, $Layer2, $Layer3, $Layer4]
+	
+	insert_structure(0)
+	
+	for i in tilemap_layers.size():
+		generate_terrain(all_layers[i], tilemap_layers[i])	
+	
 
 func insert_structure(at_layer: int = 0):
 	var floor = StructureGenerator.create_floor()
@@ -12,23 +24,47 @@ func insert_structure(at_layer: int = 0):
 	for y in all_layers[at_layer].size()-1:
 		for x in all_layers[at_layer][y].size()-1:
 			if y < floor.size() and x < floor[y].size() and floor[y][x] == 1:
-				all_layers[at_layer][y][x] = tile_types.BRICKS
+				all_layers[at_layer][y][x] = TileType.BRICKS
 
-
-func generate_2d_array(type):
-	var layer = []
-	for i  in width:
-		layer.append([])
-		for j in height:
-			layer[i].append(type)
-	var new_layer = layer
-	return new_layer
-	
-func make_3d_array(types):
+func create_2d_array(_x: int, _y: int) -> Array:
 	var result := []
-	for i in types:
-		result.append(generate_2d_array(i))
+	for y in _y:
+		var arr = []
+		arr.resize(_x)
+		result.append(arr)
 	return result
+
+func fill_2d_array_with_tile_type(array: Array, type: TileType):
+	for y in array:
+		y.fill(type)
+	return array
+	
+func create_2d_array_of_type(width: int, height: int, type: TileType):
+	var array = create_2d_array(width, height)
+	return fill_2d_array_with_tile_type(array, type)
+
+func create_3d_array(layer_types: Array[TileType]):
+	var result := []
+	for layer_type in layer_types:
+		result.append(create_2d_array_of_type(width, height, layer_type))
+	return result
+
+#func generate_2d_array(type):
+	#var result = []
+	#for i in width:
+		#var x = []
+		#layer.append([])
+		#for j in height:
+			#layer[i].append(type)
+		#append 
+	#return result
+
+		
+#func make_3d_array(types):
+	#var result := []
+	#for i in types:
+		#result.append(generate_2d_array(i))
+	#return result
 	
 func generate_terrain (array, layer: TileMapLayer):
 	for i in width:
@@ -36,45 +72,26 @@ func generate_terrain (array, layer: TileMapLayer):
 			var type = array[j][i]
 			layer.set_cell(Vector2i(i, j), 1, get_texture_coords(type))
 
-func get_texture_coords(type: tile_types):
+func get_texture_coords(type: TileType):
 	var texture
 	match type:
-		tile_types.DIRT:
+		TileType.DIRT:
 			texture = Vector2i(3,0)
-		tile_types.SAND:
+		TileType.SAND:
 			texture = Vector2i(1,0)
-		tile_types.ROCK:
+		TileType.ROCK:
 			texture = Vector2i(2,0)
-		tile_types.BEDROCK:
+		TileType.BEDROCK:
 			texture = Vector2i(7,0)
-		tile_types.BRICKS:
+		TileType.BRICKS:
 			texture = Vector2i(0,0)
 		_: 
 			texture = Vector2i(0,0)
 	return texture
 	
 
-enum tile_types{NONE, DIRT, SAND, ROCK, BEDROCK, BRICKS}
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	all_layers = make_3d_array(types)
-	var layer1 = $Layer1
-	var layer2 = $Layer2
-	var layer3 = $Layer3
-	var layer4 = $Layer4
-	
-	insert_structure(0)
-		
-	generate_terrain(all_layers[0], layer1)
-	generate_terrain(all_layers[1], layer2)
-	generate_terrain(all_layers[2], layer3)
-	generate_terrain(all_layers[3], layer4)
-	
-
 func _process(delta: float) -> void:
 	pass
-	
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
