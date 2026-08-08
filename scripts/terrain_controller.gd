@@ -41,7 +41,6 @@ func brush(size: int, tool_type: ToolType.Type, speed: int, _delta: float) -> vo
 			size, tool_type, speed, _delta
 		)
 	
-func bind(data: TerrainData, renderer: TerrainRenderer) -> void:
 #func _process(_delta: float) -> void:
 	#if mouse_left_pressed:
 		#_click(
