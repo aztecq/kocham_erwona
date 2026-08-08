@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://ctt22uqtl1ke8"]
-
-[ext_resource type="Script" uid="uid://dal007c0v6uuh" path="res://Terra Nie ruszac/DualGrid.gd" id="1_2lbdu"]
-
-[node name="Node2D" type="Node2D" unique_id=1380864451]
-
-[node name="TestDualGrid" type="Node2D" parent="." unique_id=1705183646]
-script = ExtResource("1_2lbdu")

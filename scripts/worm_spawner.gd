@@ -8,7 +8,7 @@ const WORM_SCENE := preload("res://scenes/dzdzownica.tscn")
 
 # Per tile of soil removed, not per swing: the shovel clears nine cells at a time, so a
 # chance that reads fine per click turns into a swarm here.
-@export var chance := 0.05
+@export var chance := 0.005
 
 var _renderer: TerrainRenderer
 

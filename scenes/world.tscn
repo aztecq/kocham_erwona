@@ -50,6 +50,7 @@ metadata/_custom_type_script = "uid://boo50k8tjrkss"
 position = Vector2(640, 323)
 
 [node name="CursorTool" parent="." unique_id=155314379 instance=ExtResource("6_qfnet")]
+frame_progress = 0.1996395
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=877123374]
 layer = 100

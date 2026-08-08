@@ -1,6 +1,6 @@
 class_name Dzdzownica extends Area2D
 
-var speed := 100.0
+var speed := 5.0
 
 func _ready():
 	var flip = true if randi_range(0, 1) else false
