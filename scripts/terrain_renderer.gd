@@ -37,6 +37,12 @@ func generate_terrain(array, layer: TileMapLayer):
 			var type = array[j][i]
 			layer.set_cell(Vector2i(i, j), TileAtlas.SOURCE_ID, TileAtlas.coords_for(type))
 
+# Bounds of the world grid in global space. Like cell_at_global, this ignores the
+# layers' half-tile display offset — it describes world cells, not display tiles.
+func world_rect() -> Rect2:
+	var tile_size := Vector2(tilemap_layers[0].tile_set.tile_size)
+	return Rect2(global_position, Vector2(_data.width, _data.height) * tile_size)
+
 func cell_at_global(global_pos: Vector2) -> Vector2i:
 	# Deliberately not via a TileMapLayer: those carry the half-tile display offset,
 	# and this has to return a world cell.
