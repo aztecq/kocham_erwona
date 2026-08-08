@@ -39,3 +39,6 @@ metadata/_custom_type_script = "uid://dal007c0v6uuh"
 [node name="TerrainController" type="Node2D" parent="." unique_id=2110128631]
 script = ExtResource("2_rwgxs")
 metadata/_custom_type_script = "uid://boo50k8tjrkss"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2145726113]
+position = Vector2(640, 323)

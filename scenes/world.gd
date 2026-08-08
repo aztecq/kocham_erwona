@@ -1,7 +1,7 @@
 extends Node2D
 
-@export var width: int = 20
-@export var height: int = 20
+@export var width: int = 41
+@export var height: int = 21
 
 @onready var renderer: TerrainRenderer = $TerrainRenderer
 @onready var controller: TerrainController = $TerrainController
