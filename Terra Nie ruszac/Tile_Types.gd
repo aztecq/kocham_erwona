@@ -13,5 +13,6 @@ enum Type {
 	DIRT,
 	ROCK,
 	WEIRDDIRT,
-	HUMUS
+	HUMUS,
+	FLOOR
 }

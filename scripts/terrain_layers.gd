@@ -25,7 +25,7 @@ const STRUCTURE_FLOOR_LEVEL := 2
 
 # What a ruin is built out of, and the whole of what tells its floor from its walls: both
 # are just materials sitting in the ground where the ruin replaced it.
-const STRUCTURE_FLOOR_MATERIAL := TileTypes.Type.ROCK
+const STRUCTURE_FLOOR_MATERIAL := TileTypes.Type.FLOOR
 
 # One brick per level of wall, and like STACK it reads bottom first: a wall stands on
 # BRICKS3, carries BRICKS2 above that, and only the courses that make it all the way up

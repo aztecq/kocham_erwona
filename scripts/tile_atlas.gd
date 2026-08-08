@@ -27,7 +27,8 @@ const BLOCKS := {
 	TileTypes.Type.ROCK: 5,
 	TileTypes.Type.SAND: 6,
 	TileTypes.Type.HUMUS: 1,
-	TileTypes.Type.WEIRDDIRT: 0
+	TileTypes.Type.WEIRDDIRT: 0,
+	TileTypes.Type.FLOOR: 9
 }
 
 static func block_for(type: TileTypes.Type) -> int:
