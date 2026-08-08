@@ -35,7 +35,8 @@ func dig(cell: Vector2i) -> bool:
 	return true
 	
 func select_layer(cell: Vector2i):
-	selected_layer = heightmap[cell.y][cell.x]
+	if is_inside(cell):
+		selected_layer = heightmap[cell.y][cell.x]
 	
 func deselect_layer():
 	selected_layer = 0
