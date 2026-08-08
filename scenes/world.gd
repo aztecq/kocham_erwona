@@ -20,6 +20,20 @@ var _progress_bar: ProgressBar
 var _damage_label: Label
 var _tool_label: Label
 
+var camera_dragging := false
+
+func _unhandled_input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MouseButton.MOUSE_BUTTON_MIDDLE:
+			camera_dragging = event.pressed
+		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_DOWN:
+			camera.zoom *= 1.1
+		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_UP:
+			camera.zoom /= 1.1
+	if event is InputEventMouseMotion:
+		if camera_dragging:
+			camera.position -= event.relative
+
 func _ready() -> void:
 	var params := Run.level_params()
 	width = params.width
