@@ -40,9 +40,7 @@ func scrach_level(cell: Vector2i) -> bool:
 		return false
 	var layer = heightmap[cell.y][cell.x]
 	if(layer != selected_layer):
-		print("chuj")
 		return false
-	print("chuj1")
 	layers[layer][cell.y][cell.x] = TileTypes.Type.NONE
 	heightmap[cell.y][cell.x] = layer - 1
 	tile_changed.emit(layer, cell, TileTypes.Type.NONE)

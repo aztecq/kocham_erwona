@@ -10,7 +10,7 @@ class_name TerrainLayers
 # into it — a structure replaces the ground it stands in, cell for cell.
 const STACK: Array[TileTypes.Type] = [
 	TileTypes.Type.BEDROCK,
-	TileTypes.Type.ROCK,
+	TileTypes.Type.SAND,
 	TileTypes.Type.SAND,
 	TileTypes.Type.DIRT,
 	TileTypes.Type.WEIRDDIRT,
