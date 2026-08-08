@@ -48,6 +48,7 @@ func bind(data: TerrainData, renderer: TerrainRenderer) -> void:
 			#_renderer.cell_at_global(get_global_mouse_position())
 		#)
 
+# A find lying in the open is picked up instead of dug, so digging can never bury one
 # again or carry the ground out from under it.
 func _click(cell: Vector2i) -> void:
 	var artifact := _artifacts.take(cell)
