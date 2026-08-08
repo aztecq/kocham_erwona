@@ -1,10 +1,15 @@
 shader_type canvas_item;
 
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
+
+
 // ============================================================
-// SCREEN
+// BLOOM
 // ============================================================
 
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
+uniform float bloom_intensity : hint_range(0.0, 3.0) = 0.8;
+uniform float bloom_threshold : hint_range(0.0, 2.0) = 0.7;
+uniform float bloom_radius : hint_range(0.0, 5.0) = 2.0;
 
 
 // ============================================================
@@ -49,7 +54,7 @@ uniform float scanline_density : hint_range(50.0, 1000.0) = 400.0;
 
 
 // ============================================================
-// HELPERS
+// RANDOM
 // ============================================================
 
 float random(vec2 uv)
@@ -58,6 +63,102 @@ float random(vec2 uv)
         sin(dot(uv, vec2(12.9898, 78.233)))
         * 43758.5453123
     );
+}
+
+
+// ============================================================
+// BLOOM
+// ============================================================
+
+vec3 get_bloom(vec2 uv)
+{
+    vec2 pixel = 1.0 / vec2(textureSize(screen_texture, 0));
+
+    vec2 offset_x = vec2(pixel.x * bloom_radius, 0.0);
+    vec2 offset_y = vec2(0.0, pixel.y * bloom_radius);
+
+    vec2 offset_xy = vec2(
+        pixel.x * bloom_radius,
+        pixel.y * bloom_radius
+    );
+
+    vec3 bloom = vec3(0.0);
+
+    // Center
+    bloom += texture(
+        screen_texture,
+        uv
+    ).rgb * 0.16;
+
+    // Horizontal
+    bloom += texture(
+        screen_texture,
+        uv + offset_x
+    ).rgb * 0.12;
+
+    bloom += texture(
+        screen_texture,
+        uv - offset_x
+    ).rgb * 0.12;
+
+    // Vertical
+    bloom += texture(
+        screen_texture,
+        uv + offset_y
+    ).rgb * 0.12;
+
+    bloom += texture(
+        screen_texture,
+        uv - offset_y
+    ).rgb * 0.12;
+
+    // Diagonal
+    bloom += texture(
+        screen_texture,
+        uv + offset_xy
+    ).rgb * 0.08;
+
+    bloom += texture(
+        screen_texture,
+        uv + vec2(
+            -offset_xy.x,
+            offset_xy.y
+        )
+    ).rgb * 0.08;
+
+    bloom += texture(
+        screen_texture,
+        uv + vec2(
+            offset_xy.x,
+            -offset_xy.y
+        )
+    ).rgb * 0.08;
+
+    bloom += texture(
+        screen_texture,
+        uv - offset_xy
+    ).rgb * 0.08;
+
+
+    // Brightness threshold
+    float brightness_value = dot(
+        bloom,
+        vec3(
+            0.2126,
+            0.7152,
+            0.0722
+        )
+    );
+
+    float threshold = smoothstep(
+        bloom_threshold,
+        bloom_threshold + 0.2,
+        brightness_value
+    );
+
+    bloom *= threshold;
+
+    return bloom;
 }
 
 
@@ -71,14 +172,35 @@ void fragment()
 
 
     // ========================================================
+    // ORIGINAL IMAGE
+    // ========================================================
+
+    vec3 color = texture(
+        screen_texture,
+        uv
+    ).rgb;
+
+
+    // ========================================================
+    // BLOOM
+    // ========================================================
+
+    vec3 bloom = get_bloom(uv);
+
+    color += bloom * bloom_intensity;
+
+
+    // ========================================================
     // CHROMATIC ABERRATION
     // ========================================================
 
     vec2 direction = uv - vec2(0.5);
 
-    float distance_from_center = length(direction);
+    float distance_from_center =
+        length(direction);
 
-    vec2 offset = normalize(direction + vec2(0.00001))
+    vec2 offset =
+        normalize(direction + vec2(0.00001))
         * chromatic_aberration
         * distance_from_center;
 
@@ -97,11 +219,9 @@ void fragment()
         uv - offset
     ).b;
 
-    vec3 color = vec3(
-        red,
-        green,
-        blue
-    );
+    color.r = red;
+    color.g = green;
+    color.b = blue;
 
 
     // ========================================================
@@ -115,7 +235,10 @@ void fragment()
     // CONTRAST
     // ========================================================
 
-    color = (color - 0.5) * contrast + 0.5;
+    color =
+        (color - 0.5)
+        * contrast
+        + 0.5;
 
 
     // ========================================================
@@ -142,27 +265,32 @@ void fragment()
     // VIGNETTE
     // ========================================================
 
-    vec2 vignette_uv = uv - vec2(0.5);
+    vec2 vignette_uv =
+        uv - vec2(0.5);
 
-    // Correct aspect ratio
-    float aspect = SCREEN_PIXEL_SIZE.y /
-                   SCREEN_PIXEL_SIZE.x;
+    vec2 pixel_size =
+        1.0 / vec2(textureSize(screen_texture, 0));
+
+    float aspect =
+        pixel_size.y /
+        pixel_size.x;
 
     vignette_uv.x *= aspect;
 
-    float vignette_distance = length(
-        vignette_uv
-    );
+    float vignette_distance =
+        length(vignette_uv);
 
-    float vignette = smoothstep(
-        vignette_radius,
-        vignette_radius - vignette_softness,
-        vignette_distance
-    );
+    float vignette =
+        smoothstep(
+            vignette_radius,
+            vignette_radius - vignette_softness,
+            vignette_distance
+        );
 
     vignette = 1.0 - vignette;
 
-    color *= 1.0 -
+    color *=
+        1.0 -
         vignette *
         vignette_intensity;
 
@@ -171,19 +299,19 @@ void fragment()
     // FILM GRAIN
     // ========================================================
 
-    vec2 grain_uv = uv * 1000.0;
+    vec2 grain_uv =
+        uv * 1000.0;
 
-    grain_uv += vec2(
-        TIME * grain_speed
-    );
+    grain_uv +=
+        vec2(TIME * grain_speed);
 
-    float noise = random(
-        grain_uv
-    );
+    float noise =
+        random(grain_uv);
 
     noise -= 0.5;
 
-    color += noise *
+    color +=
+        noise *
         film_grain;
 
 
@@ -191,35 +319,30 @@ void fragment()
     // SCANLINES
     // ========================================================
 
-    float scanline = sin(
-        uv.y *
-        scanline_density
-    );
+    float scanline =
+        sin(
+            uv.y *
+            scanline_density
+        );
 
     scanline =
         scanline * 0.5 +
         0.5;
 
-    float scanline_factor = mix(
+    color *= mix(
         1.0,
         scanline,
         scanlines * 0.25
     );
-
-    color *= scanline_factor;
 
 
     // ========================================================
     // OUTPUT
     // ========================================================
 
-    color = max(
-        color,
-        vec3(0.0)
-    );
+    color =
+        max(color, vec3(0.0));
 
-    COLOR = vec4(
-        color,
-        1.0
-    );
+    COLOR =
+        vec4(color, 1.0);
 }

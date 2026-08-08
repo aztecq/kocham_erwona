@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://dkgub3211xthx" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="2_ekxnf"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqqt6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekxnf"]
 shader = ExtResource("2_ekxnf")
+shader_parameter/bloom_intensity = 1.5950000757625
+shader_parameter/bloom_threshold = 0.7050000334875
+shader_parameter/bloom_radius = 5.0
 shader_parameter/vignette_intensity = 0.38800001843
-shader_parameter/vignette_radius = 0.7750000368125
-shader_parameter/vignette_softness = 0.48300002224398
+shader_parameter/vignette_radius = 0.8110000385225
+shader_parameter/vignette_softness = 0.45100002072398004
 shader_parameter/chromatic_aberration = 0.0030000001425
 shader_parameter/film_grain = 0.02
 shader_parameter/grain_speed = 1.0
@@ -51,11 +54,11 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "WYJDŹ"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2041217989]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=288789948]
 layer = 100
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=3745339]
-material = SubResource("ShaderMaterial_bqqt6")
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=185950344]
+material = SubResource("ShaderMaterial_ekxnf")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
