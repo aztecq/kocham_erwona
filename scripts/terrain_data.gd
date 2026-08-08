@@ -14,8 +14,9 @@ func get_type(layer: int, cell: Vector2i) -> TileTypes.Type:
 	return layers[layer][cell.y][cell.x]
 
 func dig(cell: Vector2i) -> bool:
-	if not is_inside(cell):
-		return false
+	#if not is_inside(cell):
+	print(cell)
+		#return false
 	var layer = heightmap[cell.y][cell.x]
 	if layer < 0:
 		return false

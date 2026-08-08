@@ -22,5 +22,4 @@ tile_set = ExtResource("2_jx7lj")
 
 [node name="DualGrid" type="Node2D" parent="." unique_id=464677052]
 script = ExtResource("3_jx7lj")
-tilesets = ExtResource("2_jx7lj")
 metadata/_custom_type_script = "uid://dal007c0v6uuh"

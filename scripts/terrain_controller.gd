@@ -11,5 +11,4 @@ func _unhandled_input(event: InputEvent) -> void:
 func bind(data: TerrainData, renderer: TerrainRenderer) -> void:
 	_data = data
 	_renderer = renderer
-	#data.tile_changed.connect(_on_tile_changed)
 	

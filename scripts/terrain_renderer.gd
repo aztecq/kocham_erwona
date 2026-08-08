@@ -11,14 +11,11 @@ func bind(data: TerrainData) -> void:
 	_redraw_all()
 	
 func _on_tile_changed(layer: int, cell: Vector2i, type: TileTypes.Type):
-	_edit_terrain(layer, cell, Vector2i(2, 2))
+	_edit_terrain(layer, cell, Vector2i(4, 4))
 
 func _redraw_all():
 	for i in _data.layers.size():
 		_edit_terrain(i, Vector2i(_data.layers[0].size()/2, _data.layers.size()/2), Vector2i(10,10))
-		
-	#for i in tilemap_layers.size():
-		#generate_terrain(_data.layers[i], tilemap_layers[i])	
 		
 func generate_terrain(array, layer: TileMapLayer):
 	for i in _data.width:
