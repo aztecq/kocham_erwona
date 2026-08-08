@@ -11,7 +11,7 @@ func bind(data: TerrainData) -> void:
 	_redraw_all()
 	
 func _on_tile_changed(layer: int, cell: Vector2i, type: TileTypes.Type):
-	_edit_terrain(layer, cell, Vector2i(4, 4))
+	_edit_terrain(layer, cell, Vector2i(2, 2))
 
 func _redraw_all():
 	for i in _data.layers.size():
@@ -28,16 +28,14 @@ func cell_at_global(global_pos: Vector2) -> Vector2i:
 	return layer.local_to_map(layer.to_local(global_pos))
 
 func _edit_terrain(layer_index: int, grid_position: Vector2i, fragment_size: Vector2i) -> void:
-	var _y = fragment_size.y - 1
-	for y in _y:
-		var _x = fragment_size.x - 1
-		for x in _x:
+	for y in range(grid_position.y - fragment_size.y/2, grid_position.y + fragment_size.y/2):
+		for x in range(grid_position.x - fragment_size.x/2, grid_position.x + fragment_size.x/2):
 			var tile_coords = dual_grid.get_tile(layer_index, 
 				[
-					_data.layers[layer_index][y][x],
-					_data.layers[layer_index][y+1][x],
+					_data.layers[layer_index][y+1][x+1],
 					_data.layers[layer_index][y][x+1],
-					_data.layers[layer_index][y+1][x+1]
+					_data.layers[layer_index][y][x],
+					_data.layers[layer_index][y+1][x]
 				]
 			)
-			tilemap_layers[layer_index].set_cell(grid_position + Vector2i(y - _y/2,x - _x/2), 0, tile_coords)
+			tilemap_layers[layer_index].set_cell(Vector2i(x,y), 0, tile_coords)

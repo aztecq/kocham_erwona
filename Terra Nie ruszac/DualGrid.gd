@@ -34,4 +34,5 @@ func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> Vector2i:
 		neighbours[3] != TileTypes.Type.NONE
 	]
 	var i: int = neighbours_to_index[key]
+	print(key)
 	return Vector2i(i % 4 + layer * 4, i / 4)
