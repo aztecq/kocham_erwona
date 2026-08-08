@@ -7,6 +7,10 @@
 [ext_resource type="TileSet" uid="uid://dn0667e1qybww" path="res://Terra Nie ruszac/dualGridTileSet.tres" id="4_71j4m"]
 [ext_resource type="PackedScene" uid="uid://cq2dcnbmkjqsh" path="res://scenes/cursor_tool.tscn" id="6_qfnet"]
 [ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="7_i7141"]
+[ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="8_4mrxx"]
+[ext_resource type="AudioStream" uid="uid://cr3n6mtk8w545" path="res://sound/dirt.mp3" id="9_e3hyu"]
+[ext_resource type="AudioStream" uid="uid://bei4a5qc4c1xb" path="res://sound/rock.mp3" id="10_q5onr"]
+[ext_resource type="AudioStream" uid="uid://ce37y426hbbcv" path="res://sound/brush.mp3" id="11_jhx03"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m686h"]
 shader = ExtResource("7_i7141")
@@ -15,7 +19,7 @@ shader_parameter/bloom_threshold = 0.7050000334875
 shader_parameter/bloom_radius = 5.0
 shader_parameter/vignette_intensity = 0.38800001843
 shader_parameter/vignette_radius = 0.8110000385225
-shader_parameter/vignette_softness = 0.45100002072398004
+shader_parameter/vignette_softness = 0.45100002072398
 shader_parameter/chromatic_aberration = 0.0030000001425
 shader_parameter/film_grain = 0.02
 shader_parameter/grain_speed = 1.0
@@ -58,3 +62,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="ButtonSFX" type="AudioStreamPlayer" parent="." unique_id=1255171373]
+stream = ExtResource("8_4mrxx")
+
+[node name="DirtSFX" type="AudioStreamPlayer" parent="." unique_id=1901112139]
+stream = ExtResource("9_e3hyu")
+
+[node name="RocksSFX" type="AudioStreamPlayer" parent="." unique_id=1433925005]
+stream = ExtResource("10_q5onr")
+
+[node name="BrushSFX" type="AudioStreamPlayer" parent="." unique_id=693738441]
+stream = ExtResource("11_jhx03")

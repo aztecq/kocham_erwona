@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3v7u514fwhtg"]
 
 [ext_resource type="Script" uid="uid://dor1axthqsrpw" path="res://scripts/sklepito.gd" id="1_sklep"]
+[ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="2_mjyt0"]
 
 [node name="Sklepito" type="Node2D" unique_id=34280308]
 script = ExtResource("1_sklep")
@@ -31,6 +32,9 @@ offset_right = 237.0
 offset_bottom = 72.0
 theme_override_font_sizes/font_size = 37
 text = "Monety: 100"
+
+[node name="SFX" type="AudioStreamPlayer" parent="." unique_id=192884058]
+stream = ExtResource("2_mjyt0")
 
 [connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

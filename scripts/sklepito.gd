@@ -24,6 +24,7 @@ func _ready() -> void:
 	add_child(next)
 
 func _buy(button_name: String) -> void:
+	$SFX.play()
 	if not Wallet.spend(PRICES[button_name]):
 		return
 	Run.owned_tools[button_name] = true

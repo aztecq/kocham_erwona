@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dkgub3211xthx" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="2_ekxnf"]
+[ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="3_bqqt6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekxnf"]
 shader = ExtResource("2_ekxnf")
@@ -65,6 +66,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="SFX" type="AudioStreamPlayer" parent="." unique_id=347949341]
+stream = ExtResource("3_bqqt6")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

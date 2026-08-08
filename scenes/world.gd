@@ -135,6 +135,7 @@ func _show_score() -> void:
 # The player's call that the dig is done: tools down, the ledger read out, and the pay
 # handed over on the way to the shop.
 func _finish_level() -> void:
+	$ButtonSFX.play()
 	controller.set_process(false)
 	controller.set_process_unhandled_input(false)
 	_summary()
@@ -168,6 +169,7 @@ func _summary() -> void:
 	var to_shop := Button.new()
 	to_shop.text = "Do sklepu"
 	to_shop.pressed.connect(func():
+		$ButtonSFX.play()
 		Wallet.add(payout)
 		Run.advance()
 		get_tree().change_scene_to_file("res://scenes/sklepito.tscn")

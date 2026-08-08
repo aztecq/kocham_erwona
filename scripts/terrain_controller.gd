@@ -143,7 +143,13 @@ func _efficiency_at(cell: Vector2i) -> float:
 func _dig_cell(cell: Vector2i) -> void:
 	if _data.dig(cell) == TileTypes.Type.NONE:
 		return
+	if _data.dig(cell) == TileTypes.Type.BRICKS1:
+		$"../RocksSFX".play()
+	else:
+		$"../DirtSFX".play()
 	var artifact := _artifacts.at(cell)
+	if ToolType.is_gentle(tool):
+		$"../BrushSFX".play()
 	if artifact != null and not ToolType.is_gentle(tool):
 		_artifacts.degrade(artifact)
 		
