@@ -22,14 +22,6 @@ func dig(cell: Vector2i) -> bool:
 	if layer < 0:
 		return false
 	layers[layer][cell.y][cell.x] = TileTypes.Type.NONE
-	heightmap[cell.y][cell.x] = _top_layer_below(layer, cell)
+	heightmap[cell.y][cell.x] = layer - 1
 	tile_changed.emit(layer, cell, TileTypes.Type.NONE)
 	return true
-
-# The layer below is not always the next thing to dig: the layers a structure is built
-# into are empty everywhere the structure isn't, so a column can have a gap in it.
-func _top_layer_below(layer: int, cell: Vector2i) -> int:
-	for i in range(layer - 1, -1, -1):
-		if layers[i][cell.y][cell.x] != TileTypes.Type.NONE:
-			return i
-	return -1
