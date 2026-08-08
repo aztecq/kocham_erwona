@@ -10,11 +10,7 @@ extends Node2D
 var data: TerrainData
 
 func _ready() -> void:
-	var types: Array[TileTypes.Type] = [
-		TileTypes.Type.BEDROCK, TileTypes.Type.SAND,
-		TileTypes.Type.DIRT, TileTypes.Type.WEIRDDIRT, TileTypes.Type.HUMUS, TileTypes.Type.GRASS
-	]
-	data = TerrainGenerator.flat(width, height, types)
+	data = TerrainGenerator.flat(width, height)
 	renderer.bind(data)
 	controller.bind(data, renderer)
 	camera.global_position = renderer.world_rect().get_center()

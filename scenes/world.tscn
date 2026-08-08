@@ -11,25 +11,8 @@ script = ExtResource("1_4wyf3")
 
 [node name="TerrainRenderer" type="Node2D" parent="." unique_id=1721805121]
 script = ExtResource("1_nnsk1")
+tile_set = ExtResource("4_71j4m")
 metadata/_custom_type_script = "uid://b3lr76glj83nl"
-
-[node name="Layer1" type="TileMapLayer" parent="TerrainRenderer" unique_id=1974817079]
-tile_set = ExtResource("4_71j4m")
-
-[node name="Layer2" type="TileMapLayer" parent="TerrainRenderer" unique_id=638857326]
-tile_set = ExtResource("4_71j4m")
-
-[node name="Layer3" type="TileMapLayer" parent="TerrainRenderer" unique_id=653161610]
-tile_set = ExtResource("4_71j4m")
-
-[node name="Layer4" type="TileMapLayer" parent="TerrainRenderer" unique_id=1994453207]
-tile_set = ExtResource("4_71j4m")
-
-[node name="Layer5" type="TileMapLayer" parent="TerrainRenderer" unique_id=1171847458]
-tile_set = ExtResource("4_71j4m")
-
-[node name="Layer6" type="TileMapLayer" parent="TerrainRenderer" unique_id=2003171644]
-tile_set = ExtResource("4_71j4m")
 
 [node name="DualGrid" type="Node2D" parent="TerrainRenderer" unique_id=1248781610]
 script = ExtResource("3_k0juu")

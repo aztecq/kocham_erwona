@@ -1,10 +1,11 @@
 class_name TerrainGenerator
 
-static func flat(width: int, height: int, types: Array[TileTypes.Type]) -> TerrainData:
+static func flat(width: int, height: int, types: Array[TileTypes.Type] = TerrainLayers.STACK) -> TerrainData:
 	var data := TerrainData.new()
 	data.width = width
 	data.height = height
-	data.layer_types = types
+	# Duplicated because the default comes from a const, which is read-only.
+	data.layer_types = types.duplicate()
 	data.layers = create_3d_array(width, height, types)
 	data.layers = insert_structure(data.layers, 0)
 	data.heightmap = create_2d_array(width, height)
