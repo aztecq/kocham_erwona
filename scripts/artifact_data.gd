@@ -12,6 +12,8 @@ class Artifact extends RefCounted:
 
 signal artifact_unearthed(artifact: Artifact)
 signal artifact_taken(artifact: Artifact)
+# `lost` is the value knocked off — what careless digging cost.
+signal artifact_degraded(artifact: Artifact, lost: int)
 
 var artifacts: Array[Artifact] = []
 
@@ -34,10 +36,29 @@ func is_unearthed(artifact: Artifact) -> bool:
 # The find lying in the open at this cell, if there is one. Still-buried finds don't
 # count — there's nothing there to pick up yet.
 func at(cell: Vector2i) -> Artifact:
-	var artifact: Artifact = _by_cell.get(cell)
-	if artifact == null or artifact.taken or not is_unearthed(artifact):
+	var artifact := buried_at(cell)
+	if artifact == null or not is_unearthed(artifact):
 		return null
 	return artifact
+
+# The find at this cell whether it shows yet or not — for whoever needs to know what's
+# under the ground, like the cursor warning that a rough tool is about to hit it.
+func buried_at(cell: Vector2i) -> Artifact:
+	var artifact: Artifact = _by_cell.get(cell)
+	if artifact == null or artifact.taken:
+		return null
+	return artifact
+
+# A rough unearthing: the find turns into its damaged form and the difference is lost.
+# It stays in the ground, pickable — just worth less than it was.
+func degrade(artifact: Artifact) -> void:
+	var worse := ArtifactTypes.degraded(artifact.file)
+	var lost: int = artifact.value - worse.value
+	if lost <= 0:
+		return
+	artifact.file = worse.file
+	artifact.value = worse.value
+	artifact_degraded.emit(artifact, lost)
 
 func take(cell: Vector2i) -> Artifact:
 	var artifact := at(cell)

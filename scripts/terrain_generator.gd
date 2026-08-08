@@ -5,9 +5,14 @@ class_name TerrainGenerator
 # 0 to leave ruins hidden completely.
 const EXPOSED_CELL_CHANCE := 0.15
 
+# Tries to find a clear spot for each ruin before giving up on it. Maps that are mostly
+# ruin already just end up with fewer than asked for.
+const PLACEMENT_ATTEMPTS := 30
+
 static func flat(
 	width: int,
 	height: int,
+	structure_count: int = 1,
 	types: Array[TileTypes.Type] = TerrainLayers.STACK
 ) -> TerrainData:
 	var data := TerrainData.new()
@@ -16,7 +21,8 @@ static func flat(
 	# Duplicated because the default comes from a const, which is read-only.
 	data.layer_types = types.duplicate()
 	data.layers = create_3d_array(width, height, data.layer_types)
-	insert_structure(data)
+	for i in structure_count:
+		insert_structure(data)
 	data.heightmap = build_heightmap(data.layers, width, height)
 	return data
 
@@ -56,36 +62,33 @@ static func build_heightmap(layers: Array, width: int, height: int) -> Array:
 			heightmap[y][x] = top
 	return heightmap
 
-# Drops one ruin somewhere it fits whole, replacing the ground it stands in: its floor on
-# STRUCTURE_FLOOR_LEVEL, each wall level on the level above the last. Nothing is carved
-# out and nothing is added — a cell of ground becomes a cell of stone.
+# Drops one ruin where it fits whole and clear of the ruins already down, replacing the
+# ground it stands in: its floor on STRUCTURE_FLOOR_LEVEL, each wall level on the level
+# above the last. Nothing is carved out and nothing is added — a cell of ground becomes
+# a cell of stone. A ruin that can't find room is dropped, not forced.
 static func insert_structure(data: TerrainData) -> void:
 	var layers := data.layers
 	var structure := StructureGenerator.create_structure()
 	var base := TerrainLayers.STRUCTURE_FLOOR_LEVEL
-	# A stack with room for fewer levels than the walls have clips them rather than
-	# failing.
-	var wall_levels := mini(StructureGenerator.MAX_WALL_HEIGHT, TerrainLayers.wall_levels())
-	var height: int = layers[base].size()
-	var width: int = layers[base][0].size()
-	var origin := Vector2i(
-		randi_range(0, maxi(0, width - structure.size.x)),
-		randi_range(0, maxi(0, height - structure.size.y))
-	)
-	data.structure = structure
-	data.structure_origin = origin
+	var wall_levels := TerrainLayers.wall_levels()
+	var origin := find_origin(data, structure.size)
+	if origin.x < 0:
+		return
+
+	var placed := TerrainData.PlacedStructure.new()
+	placed.structure = structure
+	placed.origin = origin
+	data.structures.append(placed)
 
 	for y in structure.size.y:
 		for x in structure.size.x:
 			var local := Vector2i(x, y)
 			var cell := origin + local
-			if cell.x >= width or cell.y >= height:
-				continue
 			if structure.is_floor(local):
 				layers[base][cell.y][cell.x] = TerrainLayers.STRUCTURE_FLOOR_MATERIAL
 
 			var top := base
-			for level in wall_levels:
+			for level in mini(StructureGenerator.MAX_WALL_HEIGHT, wall_levels):
 				if not structure.is_wall(level, local):
 					break
 				top = base + 1 + level
@@ -95,6 +98,27 @@ static func insert_structure(data: TerrainData) -> void:
 			# shaft through several levels of ground to reach it.
 			if top == base + wall_levels and randf() < EXPOSED_CELL_CHANCE:
 				uncover(layers, cell, top)
+
+# A spot where the ruin's whole footprint is on the map and off every other ruin's.
+# (-1, -1) when none turned up: their margin ring is part of the footprint, so two
+# footprints touching would weld into one shape and confuse whose wall is whose.
+static func find_origin(data: TerrainData, size: Vector2i) -> Vector2i:
+	if size.x > data.width or size.y > data.height:
+		return Vector2i(-1, -1)
+	for attempt in PLACEMENT_ATTEMPTS:
+		var origin := Vector2i(
+			randi_range(0, data.width - size.x),
+			randi_range(0, data.height - size.y)
+		)
+		var footprint := Rect2i(origin, size)
+		var clear := true
+		for placed in data.structures:
+			if footprint.intersects(Rect2i(placed.origin, placed.structure.size)):
+				clear = false
+				break
+		if clear:
+			return origin
+	return Vector2i(-1, -1)
 
 # Strips the ground off a single cell, letting the wall under it break the surface. Only
 # ever used on the topmost stone of a ruin, so what it opens up is sky, not a cavity.

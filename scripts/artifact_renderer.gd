@@ -22,9 +22,13 @@ func bind(artifacts: ArtifactData, terrain_renderer: TerrainRenderer) -> void:
 
 	artifacts.artifact_unearthed.connect(_on_unearthed)
 	artifacts.artifact_taken.connect(_on_taken)
+	artifacts.artifact_degraded.connect(_on_degraded)
 
 func _on_unearthed(artifact: ArtifactData.Artifact) -> void:
 	_sprites[artifact].visible = true
+
+func _on_degraded(artifact: ArtifactData.Artifact, _lost: int) -> void:
+	_sprites[artifact].texture = ArtifactTypes.texture(artifact.file)
 
 func _on_taken(artifact: ArtifactData.Artifact) -> void:
 	var sprite: Sprite2D = _sprites[artifact]

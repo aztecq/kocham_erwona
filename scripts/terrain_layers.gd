@@ -13,6 +13,7 @@ const STACK: Array[TileTypes.Type] = [
 	TileTypes.Type.SAND,
 	TileTypes.Type.SAND,
 	TileTypes.Type.DIRT,
+	TileTypes.Type.DIRT,
 	TileTypes.Type.WEIRDDIRT,
 	TileTypes.Type.HUMUS,
 	TileTypes.Type.GRASS
@@ -20,7 +21,7 @@ const STACK: Array[TileTypes.Type] = [
 
 # Where a structure's floor goes. Its walls take the levels above, and whatever is left
 # over the top of them is the ground that buries it.
-const STRUCTURE_FLOOR_LEVEL := 1
+const STRUCTURE_FLOOR_LEVEL := 2
 
 # What a ruin is built out of, and the whole of what tells its floor from its walls: both
 # are just materials sitting in the ground where the ruin replaced it.
@@ -38,6 +39,10 @@ const STRUCTURE_WALL_MATERIALS: Array[TileTypes.Type] = [
 
 static func count() -> int:
 	return STACK.size()
+
+# Whether a material is a ruin's stonework — the stuff that costs points to destroy.
+static func is_structure_material(type: TileTypes.Type) -> bool:
+	return type == STRUCTURE_FLOOR_MATERIAL or STRUCTURE_WALL_MATERIALS.has(type)
 
 # How many levels of wall there's room for above a structure's floor: what's left of the
 # stack, and no more courses than there are bricks to build them out of.
