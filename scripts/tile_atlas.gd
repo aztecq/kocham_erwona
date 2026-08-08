@@ -11,3 +11,20 @@ const COORDS := {
 
 static func coords_for(type: TileTypes.Type) -> Vector2i:
 	return COORDS.get(type, Vector2i(0, 0))
+
+# dualGridTileSet.tres defines only sources/0.
+const DUAL_SOURCE_ID := 0
+
+# kurwa.png is seven 4x4 dual grid blocks side by side, one material each.
+# Block 2 is unused. Swap BEDROCK and ROCK here if they come out the wrong way round.
+const BLOCKS := {
+	TileTypes.Type.BEDROCK: 0,
+	TileTypes.Type.DIRT: 1,
+	TileTypes.Type.HUMUS: 3,
+	TileTypes.Type.BRICKS: 4,
+	TileTypes.Type.ROCK: 5,
+	TileTypes.Type.SAND: 6,
+}
+
+static func block_for(type: TileTypes.Type) -> int:
+	return BLOCKS.get(type, 0)

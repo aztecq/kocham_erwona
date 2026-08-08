@@ -26,7 +26,10 @@ var neighbours_to_index: Dictionary = {
 	[false,  false,  false,  false]: 15,
 }
 
-func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> Vector2i:
+# `neighbours` are the four world cells meeting at the tile's centre, in the order the
+# table above is keyed: top-right, bottom-right, bottom-left, top-left (clockwise from
+# top-right). `block` picks one of the 4x4 material blocks in the atlas.
+func get_tile(block: int, neighbours: Array[TileTypes.Type]) -> Vector2i:
 	var key := [
 		neighbours[0] != TileTypes.Type.NONE,
 		neighbours[1] != TileTypes.Type.NONE,
@@ -34,5 +37,4 @@ func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> Vector2i:
 		neighbours[3] != TileTypes.Type.NONE
 	]
 	var i: int = neighbours_to_index[key]
-	print(key)
-	return Vector2i(i % 4 + layer * 4, i / 4)
+	return Vector2i(i % 4 + block * 4, i / 4)

@@ -2,6 +2,9 @@ class_name TerrainGenerator
 
 static func flat(width: int, height: int, types: Array[TileTypes.Type]) -> TerrainData:
 	var data := TerrainData.new()
+	data.width = width
+	data.height = height
+	data.layer_types = types
 	data.layers = create_3d_array(width, height, types)
 	data.layers = insert_structure(data.layers, 0)
 	data.heightmap = create_2d_array(width, height)
