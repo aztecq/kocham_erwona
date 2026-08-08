@@ -111,10 +111,24 @@ func _set_display_cell(level: int, x: int, y: int) -> void:
 			_material_at(level, material, x, y + 1),
 			_material_at(level, material, x, y)
 		]
-		_passes[level][material].set_cell(
+		var tilemap: TileMapLayer = _passes[level][material]
+		# None of this material meets here. Erased rather than drawn as the block's empty
+		# tile: it saves a draw on every cell a pass doesn't reach, which is most of them,
+		# and a block cut from a sheet with a blank bottom-right corner has no empty tile
+		# to ask for in the first place.
+		if _is_blank(corners):
+			tilemap.erase_cell(Vector2i(x, y))
+			continue
+		tilemap.set_cell(
 			Vector2i(x, y), TileAtlas.DUAL_SOURCE_ID,
 			dual_grid.get_tile(TileAtlas.block_for(material), corners)
 		)
+
+static func _is_blank(corners: Array[TileTypes.Type]) -> bool:
+	for corner in corners:
+		if corner != TileTypes.Type.NONE:
+			return false
+	return true
 
 # A cell holding some other material reads as empty to this pass — that's what leaves a
 # gap for the pass drawing that other material to fill. Cells off the edge of the map

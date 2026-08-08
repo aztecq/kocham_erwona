@@ -25,11 +25,21 @@ const STRUCTURE_FLOOR_LEVEL := 1
 # What a ruin is built out of, and the whole of what tells its floor from its walls: both
 # are just materials sitting in the ground where the ruin replaced it.
 const STRUCTURE_FLOOR_MATERIAL := TileTypes.Type.ROCK
-const STRUCTURE_WALL_MATERIAL := TileTypes.Type.BRICKS1
+
+# One brick per level of wall, and like STACK it reads bottom first: a wall stands on
+# BRICKS3, carries BRICKS2 above that, and only the courses that make it all the way up
+# are BRICKS1. Which brick a cell gets is decided by the level it's on, not by how tall
+# the wall over it happens to be, so a course looks the same the whole way round a ruin.
+const STRUCTURE_WALL_MATERIALS: Array[TileTypes.Type] = [
+	TileTypes.Type.BRICKS3,
+	TileTypes.Type.BRICKS2,
+	TileTypes.Type.BRICKS1,
+]
 
 static func count() -> int:
 	return STACK.size()
 
-# How many wall levels the stack has room for above a structure's floor.
+# How many levels of wall there's room for above a structure's floor: what's left of the
+# stack, and no more courses than there are bricks to build them out of.
 static func wall_levels() -> int:
-	return STACK.size() - STRUCTURE_FLOOR_LEVEL - 1
+	return mini(STACK.size() - STRUCTURE_FLOOR_LEVEL - 1, STRUCTURE_WALL_MATERIALS.size())

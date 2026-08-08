@@ -89,7 +89,7 @@ static func insert_structure(data: TerrainData) -> void:
 				if not structure.is_wall(level, local):
 					break
 				top = base + 1 + level
-				layers[top][cell.y][cell.x] = TerrainLayers.STRUCTURE_WALL_MATERIAL
+				layers[top][cell.y][cell.x] = TerrainLayers.STRUCTURE_WALL_MATERIALS[level]
 
 			# Only the tallest walls can surface: uncovering a short one would sink a
 			# shaft through several levels of ground to reach it.
