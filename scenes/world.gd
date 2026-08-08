@@ -27,9 +27,9 @@ func _unhandled_input(event: InputEvent):
 		if event.button_index == MouseButton.MOUSE_BUTTON_MIDDLE:
 			camera_dragging = event.pressed
 		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_DOWN:
-			camera.zoom *= 1.1
-		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_UP:
 			camera.zoom /= 1.1
+		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_UP:
+			camera.zoom *= 1.1
 	if event is InputEventMouseMotion:
 		if camera_dragging:
 			camera.position -= event.relative
@@ -61,6 +61,10 @@ func _ready() -> void:
 	add_child(artifact_renderer)
 	artifact_renderer.bind(artifacts, renderer)
 	controller.bind(data, renderer, artifacts)
+	var worms := WormSpawner.new()
+	worms.name = "WormSpawner"
+	add_child(worms)
+	worms.bind(data, renderer, controller)
 	# On the renderer so cells are its local coordinates, above the tilemaps in draw order.
 	var highlight := CursorHighlight.new()
 	highlight.name = "CursorHighlight"

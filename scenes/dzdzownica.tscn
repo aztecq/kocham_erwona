@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c6lh8e0052teg"]
+
+[ext_resource type="Texture2D" uid="uid://buk3uu5opm0qb" path="res://Terra Nie ruszac/wormik sztormik.png" id="1_jk46q"]
+[ext_resource type="Script" uid="uid://dhhx8c22xank2" path="res://scenes/dzdzownica.gd" id="1_k2plb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2plb"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(0, 0, 12, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gimus"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(12, 0, 12, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaa37"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(24, 0, 12, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85vdd"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(36, 0, 12, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drs8o"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(48, 0, 12, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmnrp"]
+atlas = ExtResource("1_jk46q")
+region = Rect2(60, 0, 12, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kaa7c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2plb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gimus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iaa37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85vdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drs8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmnrp")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1ojcp"]
+
+[node name="Dzdzownica" type="Area2D" unique_id=1583836344]
+texture_filter = 1
+script = ExtResource("1_k2plb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=936209484]
+sprite_frames = SubResource("SpriteFrames_kaa7c")
+autoplay = "default"
+frame_progress = 0.118478626
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1598614494]
+visible = false
+shape = SubResource("CapsuleShape2D_1ojcp")

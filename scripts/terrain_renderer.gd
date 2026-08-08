@@ -61,9 +61,9 @@ func _materials_in(level: int) -> Array[TileTypes.Type]:
 		found.push_front(ground)
 	return found
 
-func _on_tile_changed(level: int, cell: Vector2i, _type: TileTypes.Type):
+func _on_tile_changed(level: int, cell: Vector2i, _removed: TileTypes.Type):
 	# Four display tiles touch the changed cell: the ones up-left of it through to itself.
-	_edit_terrain(level, cell, Vector2i(4, 4))
+	_edit_terrain(level, cell, Vector2i(2, 2))
 
 func _redraw_all():
 	for level in _data.layers.size():
