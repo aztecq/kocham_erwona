@@ -18,12 +18,14 @@ const DUAL_SOURCE_ID := 0
 # kurwa.png is seven 4x4 dual grid blocks side by side, one material each.
 # Block 2 is unused. Swap BEDROCK and ROCK here if they come out the wrong way round.
 const BLOCKS := {
-	TileTypes.Type.BEDROCK: 0,
-	TileTypes.Type.DIRT: 1,
-	TileTypes.Type.HUMUS: 3,
+	TileTypes.Type.BEDROCK: 5,
+	TileTypes.Type.DIRT: 2,
+	TileTypes.Type.GRASS: 3,
 	TileTypes.Type.BRICKS: 4,
 	TileTypes.Type.ROCK: 5,
 	TileTypes.Type.SAND: 6,
+	TileTypes.Type.HUMUS: 1,
+	TileTypes.Type.WEIRDDIRT: 0,
 }
 
 static func block_for(type: TileTypes.Type) -> int:
