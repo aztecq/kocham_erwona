@@ -1,6 +1,9 @@
 class_name TerrainData extends Node
 
-signal tile_changed(layer: int, cell: Vector2i, type: TileTypes.Type)
+# `removed` is the material that just came out of the cell — the cell itself is empty now.
+# Whoever cares what was dug (worms come out of soil, not out of brickwork) reads it here
+# instead of guessing from the level.
+signal tile_changed(layer: int, cell: Vector2i, removed: TileTypes.Type)
 
 # The pit has a floor: the bottom level never comes out, so there's always ground to
 # stand a ruin on and the map can't be dug into the void.
@@ -47,5 +50,5 @@ func dig(cell: Vector2i) -> TileTypes.Type:
 	var removed: TileTypes.Type = layers[layer][cell.y][cell.x]
 	layers[layer][cell.y][cell.x] = TileTypes.Type.NONE
 	heightmap[cell.y][cell.x] = layer - 1
-	tile_changed.emit(layer, cell, TileTypes.Type.NONE)
+	tile_changed.emit(layer, cell, removed)
 	return removed

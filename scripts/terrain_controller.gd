@@ -13,6 +13,9 @@ signal tool_changed(tool: ToolType.Type)
 # A swing landed on stonework this tool can't work. The stone stays where it is; the
 # ScoreCard decides what the mark costs.
 signal stone_struck(cell: Vector2i)
+# Where the blade came down, whether it moved any earth or not. Everything living on the
+# ground it swept through is in the way of it.
+signal swing_landed(cells: Array[Vector2i])
 
 const TOOL_KEYS := {
 	KEY_1: ToolType.Type.SHOVEL,
@@ -68,10 +71,8 @@ func _press(cell: Vector2i) -> void:
 func _drag(center: Vector2i, delta: float) -> void:
 	var targets := _swing_targets(center)
 	var struck := _struck_stone(center)
-	# A swing that lands on nothing but bare stone still lands — it just marks the stone
-	# instead of moving anything.
-	if targets.is_empty() and struck.is_empty():
-		return
+	# No early out on an empty swing: a blade coming down on cleared ground still comes
+	# down, and whatever is standing there is still under it.
 	_swing -= delta
 	if _swing > 0.0:
 		return
@@ -86,6 +87,11 @@ func _drag(center: Vector2i, delta: float) -> void:
 		for cell in targets:
 			slowest = maxf(slowest, 1.0 / _efficiency_at(cell))
 	_swing = 0.0 if ToolType.is_unpaced(tool) else ToolType.BASE_SWING_TIME * slowest
+	# The blade lands before the earth moves, and the order matters: whatever is standing
+	# here is caught by this swing, but whatever the swing turns up crawls out of ground
+	# that has already been cut. Emitted the other way round, every worm a dig produced
+	# would be killed by the dig that produced it.
+	swing_landed.emit(_swing_area(center))
 	for cell in targets:
 		_dig_cell(cell)
 	for cell in struck:
@@ -110,13 +116,22 @@ func _struck_stone(center: Vector2i) -> Array[Vector2i]:
 			struck.append(cell)
 	return struck
 
-# Everything the tool's shape covers that this drag may touch at all: on the map, and
-# still at the level the press locked onto.
-func _cells_under(center: Vector2i) -> Array[Vector2i]:
+# Every cell the tool's shape reaches on the map. This is the swing itself, level lock or
+# not — the blade passes over these whether or not there's anything here it can work.
+func _swing_area(center: Vector2i) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
 	for offset: Vector2i in ToolType.get_shape(tool):
 		var cell := center + offset
-		if _data.is_inside(cell) and _data.top_level(cell) == _locked_level:
+		if _data.is_inside(cell):
+			cells.append(cell)
+	return cells
+
+# The part of the swing this drag may work: still at the level the press locked onto.
+# Cells already deeper belong to earlier swings and are left alone.
+func _cells_under(center: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	for cell in _swing_area(center):
+		if _data.top_level(cell) == _locked_level:
 			cells.append(cell)
 	return cells
 

@@ -15,6 +15,7 @@ static var tool_efficency: Dictionary = {
 	[ToolType.Type.PICKAXE, TileTypes.Type.BRICKS1]: 1,
 	[ToolType.Type.PICKAXE, TileTypes.Type.BRICKS2]: 1,
 	[ToolType.Type.PICKAXE, TileTypes.Type.BRICKS3]: 1,
+	[ToolType.Type.PICKAXE, TileTypes.Type.FLOOR]: 1,
 
 	# Straight multipliers on the swing rate: 1 is the base pace, 2 is twice as fast, .5
 	# is half. The hoe is built for turf and nothing else, so on grass it runs at double

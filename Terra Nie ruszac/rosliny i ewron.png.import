@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ulnko7us68p"
-path="res://.godot/imported/Przycisk e.png-1567ff5dc7254d635b271635f6ce2aa1.ctex"
+uid="uid://df6ou6i3fdy5"
+path="res://.godot/imported/rosliny i ewron.png-9b8cf14b018b052045b217b6abb7f242.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sklep/Przycisk e.png"
-dest_files=["res://.godot/imported/Przycisk e.png-1567ff5dc7254d635b271635f6ce2aa1.ctex"]
+source_file="res://Terra Nie ruszac/rosliny i ewron.png"
+dest_files=["res://.godot/imported/rosliny i ewron.png-9b8cf14b018b052045b217b6abb7f242.ctex"]
 
 [params]
 

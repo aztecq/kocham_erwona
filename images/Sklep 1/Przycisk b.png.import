@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca3joojyemrwa"
-path="res://.godot/imported/Sklep.png-428576e4e16b7bd857d9b44d155b63cc.ctex"
+uid="uid://cx2dxidmkbqms"
+path="res://.godot/imported/Przycisk b.png-add6952a02b426dabda2ed9c4a7eeccd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sklep/Sklep.png"
-dest_files=["res://.godot/imported/Sklep.png-428576e4e16b7bd857d9b44d155b63cc.ctex"]
+source_file="res://images/Sklep 1/Przycisk b.png"
+dest_files=["res://.godot/imported/Przycisk b.png-add6952a02b426dabda2ed9c4a7eeccd.ctex"]
 
 [params]
 
