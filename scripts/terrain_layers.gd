@@ -6,7 +6,12 @@ class_name TerrainLayers
 # Add, remove or reorder entries here and nothing else needs touching.
 const STACK: Array[TileTypes.Type] = [
 	TileTypes.Type.BEDROCK,
+	TileTypes.Type.ROCK,
+	TileTypes.Type.SAND,
+	TileTypes.Type.DIRT,
+	TileTypes.Type.WEIRDDIRT,
 	TileTypes.Type.HUMUS,
+	TileTypes.Type.GRASS
 ]
 
 static func count() -> int:
