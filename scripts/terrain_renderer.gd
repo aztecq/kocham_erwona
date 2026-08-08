@@ -80,6 +80,11 @@ func _redraw_level(level: int) -> void:
 func world_rect() -> Rect2:
 	return Rect2(global_position, Vector2(_data.width, _data.height) * Vector2(tile_set.tile_size))
 
+# Centre of a world cell in global space — where anything standing on the terrain goes.
+# The inverse of cell_at_global, and free of the display offset for the same reason.
+func global_at_cell(cell: Vector2i) -> Vector2:
+	return to_global((Vector2(cell) + Vector2(0.5, 0.5)) * Vector2(tile_set.tile_size))
+
 func cell_at_global(global_pos: Vector2) -> Vector2i:
 	# Deliberately not via a TileMapLayer: those carry the half-tile display offset,
 	# and this has to return a world cell.

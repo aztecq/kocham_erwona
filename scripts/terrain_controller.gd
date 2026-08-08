@@ -1,6 +1,7 @@
 class_name TerrainController extends Node2D
 
 var _data: TerrainData
+var _artifacts: ArtifactData
 var _renderer: TerrainRenderer
 var mouse_left_pressed := false
 
@@ -16,7 +17,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_data.deselect_layer()
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			_data.dig(
+			_click(
 				_renderer.cell_at_global(get_global_mouse_position())
 			)
 			mouse_left_pressed = event.pressed
@@ -41,6 +42,21 @@ func brush(size: int, tool_type: ToolType.Type, speed: int, _delta: float) -> vo
 		)
 	
 func bind(data: TerrainData, renderer: TerrainRenderer) -> void:
+#func _process(_delta: float) -> void:
+	#if mouse_left_pressed:
+		#_click(
+			#_renderer.cell_at_global(get_global_mouse_position())
+		#)
+
+# again or carry the ground out from under it.
+func _click(cell: Vector2i) -> void:
+	var artifact := _artifacts.take(cell)
+	if artifact != null:
+		Wallet.add(artifact.value)
+		return
+	_data.dig(cell)
+
+func bind(data: TerrainData, renderer: TerrainRenderer, artifacts: ArtifactData) -> void:
 	_data = data
 	_renderer = renderer
-	
+	_artifacts = artifacts

@@ -8,6 +8,11 @@ var layers := []
 # Base material of each layer, parallel to `layers`. Drives which atlas block it draws with.
 var layer_types: Array[TileTypes.Type] = []
 var heightmap := []
+# The ruin standing in this terrain, and where its local grid starts in world cells.
+# Anything that needs the site rather than the tiles reads these — artifacts are buried
+# in its rooms.
+var structure: StructureGenerator.Structure
+var structure_origin: Vector2i
 
 var last_cell: Vector2i
 var timer: float

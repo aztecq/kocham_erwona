@@ -16,7 +16,7 @@ static func flat(
 	# Duplicated because the default comes from a const, which is read-only.
 	data.layer_types = types.duplicate()
 	data.layers = create_3d_array(width, height, data.layer_types)
-	insert_structure(data.layers)
+	insert_structure(data)
 	data.heightmap = build_heightmap(data.layers, width, height)
 	return data
 
@@ -59,7 +59,8 @@ static func build_heightmap(layers: Array, width: int, height: int) -> Array:
 # Drops one ruin somewhere it fits whole, replacing the ground it stands in: its floor on
 # STRUCTURE_FLOOR_LEVEL, each wall level on the level above the last. Nothing is carved
 # out and nothing is added — a cell of ground becomes a cell of stone.
-static func insert_structure(layers: Array) -> void:
+static func insert_structure(data: TerrainData) -> void:
+	var layers := data.layers
 	var structure := StructureGenerator.create_structure()
 	var base := TerrainLayers.STRUCTURE_FLOOR_LEVEL
 	# A stack with room for fewer levels than the walls have clips them rather than
@@ -71,6 +72,8 @@ static func insert_structure(layers: Array) -> void:
 		randi_range(0, maxi(0, width - structure.size.x)),
 		randi_range(0, maxi(0, height - structure.size.y))
 	)
+	data.structure = structure
+	data.structure_origin = origin
 
 	for y in structure.size.y:
 		for x in structure.size.x:
