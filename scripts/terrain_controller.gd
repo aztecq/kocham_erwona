@@ -15,7 +15,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			_data.deselect_layer()
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			_data.dig(
+				_renderer.cell_at_global(get_global_mouse_position())
+			)
 			mouse_left_pressed = event.pressed
 
 
