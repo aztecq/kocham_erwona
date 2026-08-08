@@ -2,7 +2,7 @@ class_name DualGrid
 
 extends Node2D
 
-@export var tilesets: TileSet
+@export var tileset: TileSet
 
 var neighbours_to_index: Dictionary = {
 	[false, false, true, false]: 0,
@@ -26,14 +26,12 @@ var neighbours_to_index: Dictionary = {
 	[false,  false,  false,  false]: 15,
 }
 
-func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> TileData:
+func get_tile(layer: int, neighbours: Array[TileTypes.Type]) -> Vector2i:
 	var key := [
 		neighbours[0] != TileTypes.Type.NONE,
 		neighbours[1] != TileTypes.Type.NONE,
 		neighbours[2] != TileTypes.Type.NONE,
 		neighbours[3] != TileTypes.Type.NONE
 	]
-	var y = neighbours_to_index[key] / 4
-	var x = neighbours_to_index[key] % 4 + layer * 4
-	return tilesets.get_tile_data(Vector2i(x, y), 0)
-	 #tiles_sets[layer][neighbours_to_index[key]]
+	var i: int = neighbours_to_index[key]
+	return Vector2i(i % 4 + layer * 4, i / 4)
