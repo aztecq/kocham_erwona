@@ -25,7 +25,7 @@ const STRUCTURE_FLOOR_LEVEL := 1
 # What a ruin is built out of, and the whole of what tells its floor from its walls: both
 # are just materials sitting in the ground where the ruin replaced it.
 const STRUCTURE_FLOOR_MATERIAL := TileTypes.Type.ROCK
-const STRUCTURE_WALL_MATERIAL := TileTypes.Type.BRICKS
+const STRUCTURE_WALL_MATERIAL := TileTypes.Type.BRICKS1
 
 static func count() -> int:
 	return STACK.size()

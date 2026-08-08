@@ -5,9 +5,9 @@ class_name TileTypes
 enum Type {
 	NONE,
 	BEDROCK,
-	BRICKS,
 	BRICKS1,
 	BRICKS2,
+	BRICKS3,
 	GRASS,
 	SAND,
 	DIRT,

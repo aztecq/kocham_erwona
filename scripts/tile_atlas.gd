@@ -2,7 +2,7 @@ class_name TileAtlas
 
 const SOURCE_ID := 1
 const COORDS := {
-	TileTypes.Type.BRICKS: Vector2i(0, 0),
+	TileTypes.Type.BRICKS1: Vector2i(0, 0),
 	TileTypes.Type.SAND: Vector2i(1, 0),
 	TileTypes.Type.ROCK: Vector2i(2, 0),
 	TileTypes.Type.DIRT: Vector2i(3, 0),
@@ -21,9 +21,9 @@ const BLOCKS := {
 	TileTypes.Type.BEDROCK: 5,
 	TileTypes.Type.DIRT: 2,
 	TileTypes.Type.GRASS: 3,
-	TileTypes.Type.BRICKS: 4,
-	TileTypes.Type.BRICKS1: 7,
-	TileTypes.Type.BRICKS2: 8,
+	TileTypes.Type.BRICKS1: 4,
+	TileTypes.Type.BRICKS2: 7,
+	TileTypes.Type.BRICKS3: 8,
 	TileTypes.Type.ROCK: 5,
 	TileTypes.Type.SAND: 6,
 	TileTypes.Type.HUMUS: 1,
