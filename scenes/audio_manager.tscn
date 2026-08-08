@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://degefj1xqnp1b"]
+
+[ext_resource type="Script" uid="uid://d21xvwsntotlc" path="res://scripts/audio_manager.gd" id="1_m6ggh"]
+[ext_resource type="AudioStream" uid="uid://b4fkw2f6igwvv" path="res://sound/Game1.mp3" id="2_aoitu"]
+[ext_resource type="AudioStream" uid="uid://cjfufsks31qte" path="res://sound/Game2.mp3" id="3_njtn3"]
+[ext_resource type="AudioStream" uid="uid://cxggupjpky5mb" path="res://sound/Game3.mp3" id="4_kq7b2"]
+
+[node name="AudioManager" type="AudioStreamPlayer" unique_id=1807327660]
+autoplay = true
+script = ExtResource("1_m6ggh")
+songs = Array[AudioStream]([ExtResource("2_aoitu"), ExtResource("3_njtn3"), ExtResource("4_kq7b2")])
+
+[connection signal="finished" from="." to="." method="_on_finished"]
