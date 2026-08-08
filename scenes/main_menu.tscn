@@ -1,6 +1,21 @@
 [gd_scene format=3 uid="uid://jnuvfhbcbcc2"]
 
 [ext_resource type="Script" uid="uid://dkgub3211xthx" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="2_ekxnf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqqt6"]
+shader = ExtResource("2_ekxnf")
+shader_parameter/vignette_intensity = 0.38800001843
+shader_parameter/vignette_radius = 0.7750000368125
+shader_parameter/vignette_softness = 0.48300002224398
+shader_parameter/chromatic_aberration = 0.0030000001425
+shader_parameter/film_grain = 0.02
+shader_parameter/grain_speed = 1.0
+shader_parameter/brightness = 1.0
+shader_parameter/contrast = 1.070000050825
+shader_parameter/saturation = 1.0
+shader_parameter/scanlines = 0.0
+shader_parameter/scanline_density = 400.0
 
 [node name="MainMenu" type="Node2D" unique_id=2059545243]
 script = ExtResource("1_l6cm7")
@@ -35,6 +50,18 @@ offset_bottom = 470.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "WYJDŹ"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2041217989]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=3745339]
+material = SubResource("ShaderMaterial_bqqt6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
