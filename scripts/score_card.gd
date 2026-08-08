@@ -9,6 +9,10 @@ signal changed
 
 const FLOOR_TILE_POINTS := 2
 const WALL_TILE_POINTS := 3
+# What one mark on the stonework costs — a tool swung at a wall it can't work. Cheap next
+# to losing the stone outright, and charged once per stone, so scraping a blade along a
+# whole wall stings without ruining the dig.
+const SCUFF_POINTS := 1
 # What a wrecked tile costs on top of never getting to discover it. Damage hurts more
 # than ignorance, so smashing through a ruin is worse than walking away from one.
 const DAMAGE_MULTIPLIER := 2
@@ -26,9 +30,10 @@ var _terrain: TerrainData
 #   levels: {level: points} per stone still standing
 #   points: the column's worth, paid out once on discovery
 #   discovered: whether it's been paid
+#   scuffed: {level: true} for stones already marked, so a mark is charged only once
 var _columns := {}
 
-func bind(terrain: TerrainData, artifacts: ArtifactData) -> void:
+func bind(terrain: TerrainData, artifacts: ArtifactData, controller: TerrainController) -> void:
 	_terrain = terrain
 	for placed in terrain.structures:
 		_price_structure(placed)
@@ -42,6 +47,7 @@ func bind(terrain: TerrainData, artifacts: ArtifactData) -> void:
 	terrain.tile_changed.connect(_on_tile_changed)
 	artifacts.artifact_taken.connect(_on_artifact_taken)
 	artifacts.artifact_degraded.connect(_on_artifact_degraded)
+	controller.stone_struck.connect(_on_stone_struck)
 	changed.emit()
 
 func fraction() -> float:
@@ -71,7 +77,11 @@ func _price_structure(placed: TerrainData.PlacedStructure) -> void:
 				points += levels[level]
 			total += points
 			_columns[placed.origin + local] = {
-				top = levels.keys().max(), levels = levels, points = points, discovered = false
+				top = levels.keys().max(),
+				levels = levels,
+				points = points,
+				discovered = false,
+				scuffed = {},
 			}
 
 # Every removal is one of three things to a column: ground coming off its top (maybe
@@ -98,6 +108,20 @@ func _check_discovery(cell: Vector2i) -> void:
 		return
 	column.discovered = true
 	discovered += column.points
+	changed.emit()
+
+# A blade came down on a stone the tool couldn't work. The stone stays; the mark on it
+# doesn't wash off, and it's only ever paid for once — a player who keeps hammering the
+# same corner is wasting time, not money.
+func _on_stone_struck(cell: Vector2i) -> void:
+	if not _columns.has(cell):
+		return
+	var column: Dictionary = _columns[cell]
+	var level := _terrain.top_level(cell)
+	if not column.levels.has(level) or column.scuffed.has(level):
+		return
+	column.scuffed[level] = true
+	damaged += SCUFF_POINTS
 	changed.emit()
 
 func _on_artifact_taken(artifact: ArtifactData.Artifact) -> void:

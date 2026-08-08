@@ -36,7 +36,7 @@ func _ready() -> void:
 	score = ScoreCard.new()
 	score.name = "ScoreCard"
 	add_child(score)
-	score.bind(data, artifacts)
+	score.bind(data, artifacts, controller)
 	renderer.bind(data)
 	cursor_tool.bind(controller)
 	# Added from code, after the terrain, so the finds draw over it. How many there are

@@ -45,6 +45,10 @@ func _color_for(cell: Vector2i) -> Color:
 	if _artifacts.at(cell) != null:
 		return PICKUP
 	var top := _data.top_type(cell)
+	# Stone the tool can't work still gets marked for the try, so this warns before the
+	# swing rather than after it.
+	if ToolType.scuffs(_controller.tool, top):
+		return WRECKS
 	if ToolType.get_tool_efficency(_controller.tool, top) <= 0.0:
 		return REFUSES
 	# The tool bites — the question is what. Stonework going under it, or a find lying

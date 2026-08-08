@@ -276,5 +276,5 @@ animations = [{
 [node name="CursorTool" type="AnimatedSprite2D" unique_id=155314379]
 sprite_frames = SubResource("SpriteFrames_1ojcp")
 animation = &"shovel_dig"
-frame_progress = 0.04366987
+frame_progress = 0.52825075
 script = ExtResource("2_7wue8")

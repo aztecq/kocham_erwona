@@ -10,6 +10,9 @@ class_name TerrainController extends Node2D
 # only the brush brings artifacts out of the ground undamaged.
 
 signal tool_changed(tool: ToolType.Type)
+# A swing landed on stonework this tool can't work. The stone stays where it is; the
+# ScoreCard decides what the mark costs.
+signal stone_struck(cell: Vector2i)
 
 const TOOL_KEYS := {
 	KEY_1: ToolType.Type.SHOVEL,
@@ -64,33 +67,58 @@ func _press(cell: Vector2i) -> void:
 
 func _drag(center: Vector2i, delta: float) -> void:
 	var targets := _swing_targets(center)
-	if targets.is_empty():
+	var struck := _struck_stone(center)
+	# A swing that lands on nothing but bare stone still lands — it just marks the stone
+	# instead of moving anything.
+	if targets.is_empty() and struck.is_empty():
 		return
 	_swing -= delta
 	if _swing > 0.0:
 		return
-	# The swing paces itself by the slowest material under it, so sweeping the brush
-	# through easy sand doesn't speed up clearing the stubborn patch beside it.
-	var slowest := 0.0
-	for cell in targets:
-		slowest = maxf(slowest, 1.0 / _efficiency_at(cell))
-	_swing = 0.0 #ToolType.BASE_SWING_TIME * slowest
+	# The swing paces itself by the slowest material under it, so a tool crossing easy
+	# sand doesn't speed up clearing the stubborn patch beside it. Efficiency above 1
+	# really does run faster — that's how a tool built for one material beats a
+	# general-purpose one at it. A swing at nothing but stone has no material to pace
+	# against, and takes one full swing.
+	var slowest := 1.0
+	if not targets.is_empty():
+		slowest = 0.0
+		for cell in targets:
+			slowest = maxf(slowest, 1.0 / _efficiency_at(cell))
+	_swing = 0.0 if ToolType.is_unpaced(tool) else ToolType.BASE_SWING_TIME * slowest
 	for cell in targets:
 		_dig_cell(cell)
+	for cell in struck:
+		stone_struck.emit(cell)
 
-# The cells this swing will actually bite: under the tool's shape, still at the locked
-# level, made of something the tool works on, and not holding an uncovered find — those
-# wait for a deliberate pickup click.
+# The cells this swing will actually bite: covered by the tool, made of something the
+# tool works on, and not holding an uncovered find — those wait for a deliberate click.
 func _swing_targets(center: Vector2i) -> Array[Vector2i]:
 	var targets: Array[Vector2i] = []
-	for offset: Vector2i in ToolType.get_shape(tool):
-		var cell := center + offset
-		if not _data.is_inside(cell) or _data.top_level(cell) != _locked_level:
-			continue
+	for cell in _cells_under(center):
 		if _artifacts.at(cell) != null or _efficiency_at(cell) <= 0.0:
 			continue
 		targets.append(cell)
 	return targets
+
+# The cells the same swing hits without being able to work them: stonework under a tool
+# that has no business on it. They aren't dug, only marked.
+func _struck_stone(center: Vector2i) -> Array[Vector2i]:
+	var struck: Array[Vector2i] = []
+	for cell in _cells_under(center):
+		if ToolType.scuffs(tool, _data.top_type(cell)):
+			struck.append(cell)
+	return struck
+
+# Everything the tool's shape covers that this drag may touch at all: on the map, and
+# still at the level the press locked onto.
+func _cells_under(center: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	for offset: Vector2i in ToolType.get_shape(tool):
+		var cell := center + offset
+		if _data.is_inside(cell) and _data.top_level(cell) == _locked_level:
+			cells.append(cell)
+	return cells
 
 func _efficiency_at(cell: Vector2i) -> float:
 	return ToolType.get_tool_efficency(tool, _data.top_type(cell))
