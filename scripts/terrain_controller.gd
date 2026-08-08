@@ -74,7 +74,7 @@ func _drag(center: Vector2i, delta: float) -> void:
 	var slowest := 0.0
 	for cell in targets:
 		slowest = maxf(slowest, 1.0 / _efficiency_at(cell))
-	_swing = ToolType.BASE_SWING_TIME * slowest
+	_swing = 0.0 #ToolType.BASE_SWING_TIME * slowest
 	for cell in targets:
 		_dig_cell(cell)
 
@@ -103,3 +103,6 @@ func _dig_cell(cell: Vector2i) -> void:
 	var artifact := _artifacts.at(cell)
 	if artifact != null and not ToolType.is_gentle(tool):
 		_artifacts.degrade(artifact)
+		
+func is_digging() -> bool:
+	return _locked_level != NOT_DIGGING

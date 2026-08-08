@@ -7,6 +7,7 @@ extends Node2D
 
 @onready var renderer: TerrainRenderer = $TerrainRenderer
 @onready var controller: TerrainController = $TerrainController
+@onready var cursor_tool: CursorTool = $CursorTool
 @onready var camera: Camera2D = $Camera2D
 
 var data: TerrainData
@@ -37,6 +38,7 @@ func _ready() -> void:
 	add_child(score)
 	score.bind(data, artifacts)
 	renderer.bind(data)
+	cursor_tool.bind(controller)
 	# Added from code, after the terrain, so the finds draw over it. How many there are
 	# is a property of the site rather than of the scene, so there's nothing to place by
 	# hand in the editor.

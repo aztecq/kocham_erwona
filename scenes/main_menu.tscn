@@ -20,6 +20,7 @@ offset_right = 473.0
 offset_bottom = 497.0
 rotation = -0.7128327
 text = "START"
+metadata/_edit_use_anchors_ = true
 
 [node name="QuitButton" type="Button" parent="." unique_id=568499944]
 anchors_preset = 8
