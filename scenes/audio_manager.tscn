@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cxggupjpky5mb" path="res://sound/Game3.mp3" id="4_kq7b2"]
 
 [node name="AudioManager" type="AudioStreamPlayer" unique_id=1807327660]
+volume_db = -8.74
 autoplay = true
 script = ExtResource("1_m6ggh")
 songs = Array[AudioStream]([ExtResource("2_aoitu"), ExtResource("3_njtn3"), ExtResource("4_kq7b2")])
