@@ -11,8 +11,12 @@ static func bury(terrain: TerrainData, finds_per_ruin: int = -1) -> ArtifactData
 	data.name = "ArtifactData"
 	data.bind(terrain)
 
+	var level := TerrainLayers.STRUCTURE_FLOOR_LEVEL + 1
 	for placed in terrain.structures:
-		var cells := room_cells(placed)
+		var cells: Array[Vector2i] = []
+		for cell in room_cells(placed):
+			if can_hold_find(terrain, level, cell):
+				cells.append(cell)
 		cells.shuffle()
 		var count := finds_per_ruin
 		if count < 0:
@@ -21,11 +25,18 @@ static func bury(terrain: TerrainData, finds_per_ruin: int = -1) -> ArtifactData
 			var entry := ArtifactTypes.pick_random()
 			var artifact := ArtifactData.Artifact.new()
 			artifact.cell = cells[i]
-			artifact.level = TerrainLayers.STRUCTURE_FLOOR_LEVEL + 1
+			artifact.level = level
 			artifact.value = entry.value
 			artifact.file = entry.file
 			data.add(artifact)
 	return data
+
+# Whether a find can lie here and still be got out whole: what covers it has to be
+# something the brush works. A boulder settled in the fill would leave the pickaxe as the
+# only way down to it, and the pickaxe knocks a find about on the way up — a room that
+# stony simply holds fewer finds.
+static func can_hold_find(terrain: TerrainData, level: int, cell: Vector2i) -> bool:
+	return ToolType.get_tool_efficency(ToolType.Type.BRUSH, terrain.get_type(level, cell)) > 0.0
 
 # The insides of a ruin's rooms, in world cells: floor with no wall standing on it.
 static func room_cells(placed: TerrainData.PlacedStructure) -> Array[Vector2i]:

@@ -152,7 +152,7 @@ func _dig_cell(cell: Vector2i) -> void:
 	var dug_type = _data.dig(cell)
 	if dug_type == TileTypes.Type.NONE:
 		return
-	if dug_type == TileTypes.Type.BRICKS1:
+	if dug_type == TileTypes.Type.BRICKS1 or dug_type == TileTypes.Type.ROCK:
 		$"../RocksSFX".play()
 	else:
 		$"../DirtSFX".play()

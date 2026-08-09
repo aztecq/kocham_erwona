@@ -26,8 +26,9 @@ func _on_swing_landed(cells: Array[Vector2i]) -> void:
 			worm.die()
 
 func _on_tile_changed(_level: int, cell: Vector2i, removed: TileTypes.Type) -> void:
-	# Nothing lives in the stonework, so breaking a ruin turns nothing up.
-	if TerrainLayers.is_structure_material(removed):
+	# Nothing lives in the stonework or inside a boulder, so breaking either turns nothing
+	# up — worms come out of the earth around them.
+	if TerrainLayers.is_structure_material(removed) or removed == TileTypes.Type.ROCK:
 		return
 	if randf() >= chance:
 		return

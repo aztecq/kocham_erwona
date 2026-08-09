@@ -2,8 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dkgub3211xthx" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://w41c21i3usy1" path="res://images/menu glowne/Menu.png" id="2_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="3_bqqt6"]
+[ext_resource type="FontFile" uid="uid://cy4l3xw5wuono" path="res://font.ttf" id="3_jk1qb"]
 [ext_resource type="Texture2D" uid="uid://bjk1mvef1t7rg" path="res://images/Mammon_3.webp" id="3_wu84c"]
+[ext_resource type="Texture2D" uid="uid://bpl8unol4um61" path="res://images/menu glowne/Przycisk menu .png" id="4_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://cuqveovtjbtre" path="res://images/menu glowne/Przycisk menu hover .png" id="5_lgwnu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ojcp"]
+texture = ExtResource("4_5dd4i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kaa7c"]
+texture = ExtResource("5_lgwnu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekxnf"]
 shader = ExtResource("2_ekxnf")
@@ -25,20 +35,32 @@ shader_parameter/scanline_density = 400.0
 [node name="MainMenu" type="Node2D" unique_id=2059545243]
 script = ExtResource("1_l6cm7")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1710007796]
+offset_right = 1152.0
+offset_bottom = 647.0
+texture = ExtResource("2_tbmy8")
+
 [node name="Label" type="Label" parent="." unique_id=1097793327]
 offset_left = -7.0
 offset_top = 116.0
 offset_right = 1143.0
 offset_bottom = 200.0
-text = "CHILL ARCHEOLOGY"
+theme_override_colors/font_color = Color(0.19607843, 0.13333334, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_jk1qb")
+theme_override_font_sizes/font_size = 32
+text = "RUINS AND ARTIFACTS:
+WORM AMONG US"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="." unique_id=1307255316]
-offset_left = 186.0
-offset_top = 417.0
-offset_right = 473.0
-offset_bottom = 497.0
-rotation = -0.7128327
+offset_left = 422.0
+offset_top = 277.0
+offset_right = 709.0
+offset_bottom = 357.0
+theme_override_fonts/font = ExtResource("3_jk1qb")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_1ojcp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kaa7c")
 text = "START"
 metadata/_edit_use_anchors_ = true
 
@@ -48,13 +70,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 706.0
-offset_top = 404.0
-offset_right = 888.0
-offset_bottom = 470.0
+offset_left = 425.0
+offset_top = 397.0
+offset_right = 712.0
+offset_bottom = 477.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "WYJDŹ"
+theme_override_fonts/font = ExtResource("3_jk1qb")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_1ojcp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kaa7c")
+text = "EXIT"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=288789948]
 layer = 100
