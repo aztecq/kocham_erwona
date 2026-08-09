@@ -274,6 +274,7 @@ animations = [{
 }]
 
 [node name="CursorTool" type="AnimatedSprite2D" unique_id=155314379]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_1ojcp")
 animation = &"brush_dig"
 frame_progress = 0.73371613
