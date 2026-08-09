@@ -1,41 +1,133 @@
 [gd_scene format=3 uid="uid://b3v7u514fwhtg"]
 
+[ext_resource type="Theme" uid="uid://dhun1bsvs6sdu" path="res://theme.tres" id="1_8r1wq"]
 [ext_resource type="Script" uid="uid://dor1axthqsrpw" path="res://scripts/shop.gd" id="1_sklep"]
+[ext_resource type="Texture2D" uid="uid://b87cdxms0o7f7" path="res://images/sklep poprawiony/Sklep.png" id="2_ajxib"]
 [ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="2_mjyt0"]
+[ext_resource type="Texture2D" uid="uid://b64xxu30nw13t" path="res://images/Moneta_poprawa.png" id="5_8r1wq"]
+[ext_resource type="PackedScene" uid="uid://csc0j4tskuo8o" path="res://scenes/purchase_option_panel.tscn" id="6_y6sft"]
 
-[node name="Sklepito" type="Node2D" unique_id=34280308]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ojcp"]
+texture = ExtResource("2_ajxib")
+
+[node name="Shop" type="PanelContainer" unique_id=41144644]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_8r1wq")
+theme_override_styles/panel = SubResource("StyleBoxTexture_1ojcp")
 script = ExtResource("1_sklep")
-
-[node name="Button1" type="Button" parent="." unique_id=1149260510]
-offset_left = 69.0
-offset_top = 351.0
-offset_right = 252.0
-offset_bottom = 410.0
-text = "OPCJA 1"
-
-[node name="Button2" type="Button" parent="." unique_id=1827525090]
-offset_left = 312.0
-offset_top = 353.0
-offset_right = 493.0
-offset_bottom = 414.0
-text = "OPCJA2	"
-
-[node name="Button3" type="Button" parent="." unique_id=1832639969]
-offset_left = 562.0
-offset_top = 347.0
-offset_right = 745.0
-offset_bottom = 410.0
-text = "OPCJA3"
-
-[node name="Monety" type="Label" parent="." unique_id=1053072350]
-offset_right = 237.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 37
-text = "Monety: 100"
 
 [node name="SFX" type="AudioStreamPlayer" parent="." unique_id=192884058]
 stream = ExtResource("2_mjyt0")
 
-[connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1292851297]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=839625089]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1431403207]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=1983195193]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2" unique_id=134989145]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxWallet" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/PanelContainer" unique_id=355300010]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/PanelContainer/HBoxWallet" unique_id=1750242195]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("5_8r1wq")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/PanelContainer/HBoxWallet" unique_id=1053072350]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "100"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2" unique_id=1539591117]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2/PanelContainer2" unique_id=1937048921]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Shop"
+horizontal_alignment = 1
+
+[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2" unique_id=1656116123]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=367557024]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1942940458]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer" unique_id=1387347941]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=1344283577 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer2" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=1152750024 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer3" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=551512062 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer4" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=1120396567 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer5" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=2038387797 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer6" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=665972782 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer7" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=1080120303 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer8" parent="MarginContainer/VBoxContainer/HBoxContainer2/CenterContainer/GridContainer" unique_id=1985324554 instance=ExtResource("6_y6sft")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1785361540]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+alignment = 1
+
+[node name="NextLevelButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1693449995]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Go to next level"

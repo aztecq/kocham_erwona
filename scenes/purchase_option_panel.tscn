@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://csc0j4tskuo8o"]
+
+[ext_resource type="Theme" uid="uid://dhun1bsvs6sdu" path="res://theme.tres" id="1_4srsh"]
+[ext_resource type="Texture2D" uid="uid://cicqx3wsgy8h8" path="res://images/sklep poprawiony/Untitled 11.png" id="1_hs2m1"]
+[ext_resource type="Texture2D" uid="uid://x86f8gteo4q7" path="res://Terra Nie ruszac/jebane w dupe animacje narzedzi.png" id="2_4srsh"]
+[ext_resource type="Script" uid="uid://cghweeul5bctk" path="res://scenes/purchase_option_panel.gd" id="2_k7c4p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fv8gf"]
+texture = ExtResource("1_hs2m1")
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kaa7c"]
+atlas = ExtResource("2_4srsh")
+region = Rect2(1173, 0, 69, 64)
+
+[node name="PurchaseOptionPanel" type="PanelContainer" unique_id=1218127269]
+offset_right = 100.0
+offset_bottom = 143.0
+theme = ExtResource("1_4srsh")
+script = ExtResource("2_k7c4p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=815953894]
+layout_mode = 2
+theme = ExtResource("1_4srsh")
+theme_override_constants/separation = 10
+
+[node name="Frame" type="PanelContainer" parent="VBoxContainer" unique_id=316458695]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fv8gf")
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer/Frame" unique_id=768447186]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_kaa7c")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="LabelCost" type="Label" parent="VBoxContainer" unique_id=197813242]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "100"
+horizontal_alignment = 1

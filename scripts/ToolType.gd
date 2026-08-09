@@ -88,6 +88,19 @@ static var names: Dictionary = {
 	Type.HOE: "Motyka",
 	Type.SHOVEL: "Łopata",
 }
+
+# The animation a tool rests in; swinging is the same name with "_dig" on the end. These
+# are the animations in cursor_tool_frames.tres, and anything that wants to draw a tool
+# goes through them rather than keeping its own picture of one.
+static var animations: Dictionary = {
+	Type.BRUSH: &"brush",
+	Type.PICKAXE: &"pickaxe",
+	Type.HOE: &"hoe",
+	Type.SHOVEL: &"shovel",
+}
+
+static func dig_animation(tool: Type) -> StringName:
+	return StringName(String(animations[tool]) + "_dig")
 static func get_tool_efficency(tegoTypuBenc: ToolType.Type, tile_type: TileTypes.Type) -> float:
 	var key := [tegoTypuBenc,tile_type]
 	if(tool_efficency.has(key)):
