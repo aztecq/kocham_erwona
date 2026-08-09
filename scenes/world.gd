@@ -10,15 +10,28 @@ extends Node2D
 @onready var cursor_tool: CursorTool = $CursorTool
 @onready var camera: Camera2D = $Camera2D
 
+# How far the tool in hand stands out of the rack.
+const TOOL_LIFT := 8.0
+
+# The dig's readouts, laid out in the scene. This only fills them in.
+@onready var _hud: CanvasLayer = $HUD
+@onready var _level_label: Label = %LabelLevel
+@onready var _progress_bar: ProgressBar = %ProgressBar
+@onready var _penalty_label: Label = %LabelPenalty2
+@onready var _toolbar: HBoxContainer = %Toolbar
+
+# The rack, left to right, against the tools it racks. Which tool a slot is comes from
+# TerrainController's keys rather than from here, so the row can't say 3 and hand over a
+# shovel — the labels in the scene are those same numbers.
+var _slots: Array[Control] = []
+var _slot_tools: Array[ToolType.Type] = []
+# Where the row put each slot. Read back from the container after it lays the row out,
+# because that line is the container's to decide and the lift is measured from it.
+var _slot_home := PackedFloat32Array()
+
 var data: TerrainData
 var artifacts: ArtifactData
 var score: ScoreCard
-
-var _hud: CanvasLayer
-var _coins_label: Label
-var _progress_bar: ProgressBar
-var _damage_label: Label
-var _tool_label: Label
 
 var camera_dragging := false
 
@@ -71,66 +84,62 @@ func _ready() -> void:
 	renderer.add_child(highlight)
 	highlight.bind(data, renderer, artifacts, controller)
 	camera.global_position = renderer.world_rect().get_center()
-	_build_hud()
+	_bind_hud()
 
-# Coins in the same words the shop uses, the dig's progress against everything the site
-# holds, and the way out. Built here rather than in the scene so it can't drift out of
-# step with the objects it reads.
-func _build_hud() -> void:
-	_hud = CanvasLayer.new()
-	_hud.name = "HUD"
-	add_child(_hud)
-
-	var panel := VBoxContainer.new()
-	panel.position = Vector2(16, 12)
-	_hud.add_child(panel)
-
-	var level_label := Label.new()
-	level_label.add_theme_font_size_override("font_size", 18)
-	level_label.text = "Poziom %d" % Run.level
-	panel.add_child(level_label)
-
-	_coins_label = Label.new()
-	_coins_label.add_theme_font_size_override("font_size", 28)
-	panel.add_child(_coins_label)
-
-	_progress_bar = ProgressBar.new()
-	_progress_bar.custom_minimum_size = Vector2(240, 22)
-	_progress_bar.max_value = 1.0
-	_progress_bar.step = 0.001
-	panel.add_child(_progress_bar)
-
-	_damage_label = Label.new()
-	_damage_label.add_theme_font_size_override("font_size", 18)
-	_damage_label.add_theme_color_override("font_color", Color(0.9, 0.35, 0.3))
-	panel.add_child(_damage_label)
-
-	_tool_label = Label.new()
-	_tool_label.add_theme_font_size_override("font_size", 18)
-	panel.add_child(_tool_label)
-
-	var finish := Button.new()
-	finish.text = "Zakończ wykopaliska"
-	finish.pressed.connect(_finish_level)
-	panel.add_child(finish)
-
-	Wallet.coins_changed.connect(_show_coins)
-	_show_coins(Wallet.coins)
+# The readouts are the scene's; what they say is the ledger's. Hooked up here so a number
+# on screen can't drift out of step with the object it reads — nothing pushes to the HUD,
+# it's redrawn whenever the score changes.
+func _bind_hud() -> void:
+	_level_label.text = "Level %d" % Run.level
+	%ButtonEnd.pressed.connect(_finish_level)
 	score.changed.connect(_show_score)
 	_show_score()
+	_bind_toolbar()
+
+# The rack: a slot per tool, in the order the number keys are in, and clicking one is the
+# same as pressing its number. The icons are the scene's — this only tints them the way
+# the player bought them and marks which one is in hand.
+func _bind_toolbar() -> void:
+	var tools := TerrainController.TOOL_KEYS.values()
+	for i in mini(tools.size(), _toolbar.get_child_count()):
+		var slot: Control = _toolbar.get_child(i)
+		var tool: ToolType.Type = tools[i]
+		_slots.append(slot)
+		_slot_tools.append(tool)
+		# One button per slot, frame and icon included, the same way the shop's options
+		# take a click anywhere on themselves.
+		InteractablePanelContainer.claim_mouse(slot)
+		slot.gui_input.connect(_on_slot_input.bind(tool))
+		var icon := slot.find_child("Icon")
+		if icon is CanvasItem:
+			icon.modulate = ToolSkins.tint(Run.skin_for(tool))
+	_slot_home.resize(_slots.size())
+
+	# The row decides where the slots sit; the lift is put back on top of that decision
+	# every time it re-decides, so a resize can't leave a tool stranded out of line.
+	_toolbar.sort_children.connect(_place_slots)
+	_toolbar.queue_sort()
 	controller.tool_changed.connect(_show_tool)
+
+func _on_slot_input(event: InputEvent, tool: ToolType.Type) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		controller.select_tool(tool)
+
+func _place_slots() -> void:
+	for i in _slots.size():
+		_slot_home[i] = _slots[i].position.y
 	_show_tool(controller.tool)
 
-func _show_coins(coins: int) -> void:
-	_coins_label.text = "Monety: %s" % coins
-
+# The tool in hand stands a little out of the rack; the rest sit on the line the row gave
+# them.
 func _show_tool(tool: ToolType.Type) -> void:
-	_tool_label.text = "[1-4] %s" % ToolType.names[tool]
+	for i in _slots.size():
+		_slots[i].position.y = _slot_home[i] - (TOOL_LIFT if _slot_tools[i] == tool else 0.0)
 
 func _show_score() -> void:
-	_progress_bar.value = score.fraction()
-	_damage_label.text = "Zniszczenia: %d" % score.damaged
-	_damage_label.visible = score.damaged > 0
+	# Against the bar's own scale, so the range set in the editor is the one that counts.
+	_progress_bar.value = score.fraction() * _progress_bar.max_value
+	_penalty_label.text = str(score.penalty())
 
 # The player's call that the dig is done: tools down, the ledger read out, and the pay
 # handed over on the way to the shop.
@@ -156,18 +165,20 @@ func _summary() -> void:
 
 	var title := Label.new()
 	title.add_theme_font_size_override("font_size", 34)
-	title.text = "Poziom %d zakończony" % Run.level
+	title.text = "Level %d complete" % Run.level
 	box.add_child(title)
 
 	var stats := Label.new()
 	stats.add_theme_font_size_override("font_size", 22)
-	stats.text = "Postęp: %d%%\nOdkryto: %d pkt\nZniszczenia: %d pkt\nWypłata: %d monet" % [
-		roundi(score.fraction() * 100), score.discovered, score.damaged, payout
+	# The same penalty the HUD was counting up, so the summary only tells the player what
+	# it comes to rather than anything new.
+	stats.text = "Progress: %d%%\nUncovered: %d pts\nPenalty: %d coins\nPayout: %d coins" % [
+		roundi(score.fraction() * 100), score.discovered, score.penalty(), payout
 	]
 	box.add_child(stats)
 
 	var to_shop := Button.new()
-	to_shop.text = "Do sklepu"
+	to_shop.text = "To the shop"
 	to_shop.pressed.connect(func():
 		$ButtonSFX.play()
 		Wallet.add(payout)

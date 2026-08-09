@@ -7,6 +7,9 @@ class_name CursorTool extends AnimatedSprite2D
 const OFFSET := Vector2(10, -6)   # żeby ostrze wskazywało kafel, a nie środek grafiki
 
 var _controller: TerrainController
+# Czy myszka stoi nad interfejsem. Pilnowane, żeby tryb kursora ustawiać przy zmianie,
+# a nie co klatkę.
+var _over_ui := false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -21,10 +24,23 @@ func bind(controller: TerrainController) -> void:
 	_show_tool(controller.tool)
 
 func _process(_delta: float) -> void:
+	# Nad interfejsem narzędzie ustępuje myszce systemowej: HUD rysuje się na warstwie
+	# ponad światem, więc kursor-narzędzie i tak schowałby się pod paskiem, a przy okazji
+	# widać, czy przycisk pod spodem da się kliknąć.
+	_show_over_ui(get_viewport().gui_get_hovered_control() != null)
+	if _over_ui:
+		return
 	global_position = get_global_mouse_position() + OFFSET
 	var wanted := _animation_for(_controller.tool)
 	if animation != wanted:
 		play(wanted)
+
+func _show_over_ui(over_ui: bool) -> void:
+	if over_ui == _over_ui:
+		return
+	_over_ui = over_ui
+	visible = not over_ui
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if over_ui else Input.MOUSE_MODE_HIDDEN
 
 func _animation_for(tool: ToolType.Type) -> StringName:
 	return ToolType.dig_animation(tool) if _controller.is_digging() else ToolType.animations[tool]

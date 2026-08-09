@@ -11,6 +11,11 @@
 [ext_resource type="AudioStream" uid="uid://cr3n6mtk8w545" path="res://sound/dirt.mp3" id="9_e3hyu"]
 [ext_resource type="AudioStream" uid="uid://bei4a5qc4c1xb" path="res://sound/rock.mp3" id="10_q5onr"]
 [ext_resource type="AudioStream" uid="uid://ce37y426hbbcv" path="res://sound/brush.mp3" id="11_jhx03"]
+[ext_resource type="Theme" uid="uid://dhun1bsvs6sdu" path="res://theme.tres" id="12_jhx03"]
+[ext_resource type="FontFile" uid="uid://cy4l3xw5wuono" path="res://font.ttf" id="13_o8fc1"]
+[ext_resource type="Texture2D" uid="uid://cicqx3wsgy8h8" path="res://images/sklep poprawiony/Untitled 11.png" id="14_dss4m"]
+[ext_resource type="Texture2D" uid="uid://x86f8gteo4q7" path="res://Terra Nie ruszac/jebane w dupe animacje narzedzi.png" id="15_7t5mc"]
+[ext_resource type="Texture2D" uid="uid://ww3tmlnwci2" path="res://Terra Nie ruszac/brushAnimation.png" id="16_lakw3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m686h"]
 shader = ExtResource("7_i7141")
@@ -28,6 +33,34 @@ shader_parameter/contrast = 1.070000050825
 shader_parameter/saturation = 1.0
 shader_parameter/scanlines = 0.0
 shader_parameter/scanline_density = 400.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ojcp"]
+bg_color = Color(0.78431374, 0.8784314, 0.5294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fv8gf"]
+bg_color = Color(0.58431375, 0.6431373, 0.44705883, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xo05s"]
+bg_color = Color(0.89558303, 0.9580752, 0.86229724, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pm21f"]
+texture = ExtResource("14_dss4m")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lf6f"]
+atlas = ExtResource("15_7t5mc")
+region = Rect2(1179.3727, 10.71759, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iits"]
+atlas = ExtResource("16_lakw3")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
+atlas = ExtResource("15_7t5mc")
+region = Rect2(-3.7037725, 13.942694, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpybi"]
+atlas = ExtResource("15_7t5mc")
+region = Rect2(545.4928, 17.622017, 50, 50)
 
 [node name="World" type="Node2D" unique_id=1730093850]
 script = ExtResource("1_4wyf3")
@@ -75,3 +108,174 @@ stream = ExtResource("10_q5onr")
 
 [node name="BrushSFX" type="AudioStreamPlayer" parent="." unique_id=693738441]
 stream = ExtResource("11_jhx03")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=772956265]
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD" unique_id=2043498156]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme = ExtResource("12_jhx03")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ojcp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer" unique_id=1885550628]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PanelContainer" type="MarginContainer" parent="HUD/PanelContainer/HBoxContainer" unique_id=630196830]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_constants/margin_left = 20
+
+[node name="LabelLevel" type="Label" parent="HUD/PanelContainer/HBoxContainer/PanelContainer" unique_id=848974994]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Level 1"
+
+[node name="PanelContainer2" type="PanelContainer" parent="HUD/PanelContainer/HBoxContainer" unique_id=763499280]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD/PanelContainer/HBoxContainer/PanelContainer2" unique_id=544772353]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("12_jhx03")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_o8fc1")
+theme_override_styles/background = SubResource("StyleBoxFlat_fv8gf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xo05s")
+value = 33.0
+
+[node name="PanelContainer3" type="PanelContainer" parent="HUD/PanelContainer/HBoxContainer" unique_id=2012718717]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer/HBoxContainer/PanelContainer3" unique_id=1354821399]
+layout_mode = 2
+alignment = 1
+
+[node name="LabelPenalty" type="Label" parent="HUD/PanelContainer/HBoxContainer/PanelContainer3/HBoxContainer" unique_id=1880854848]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Penalty"
+
+[node name="LabelPenalty2" type="Label" parent="HUD/PanelContainer/HBoxContainer/PanelContainer3/HBoxContainer" unique_id=2048470302]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "0"
+
+[node name="ButtonEnd" type="Button" parent="HUD/PanelContainer/HBoxContainer" unique_id=898669868]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Finish excavation"
+
+[node name="PanelContainer2" type="PanelContainer" parent="HUD" unique_id=2089070984]
+offset_left = 27.0
+offset_top = 568.0
+offset_right = 199.0
+offset_bottom = 629.0
+
+[node name="Toolbar" type="HBoxContainer" parent="HUD/PanelContainer2" unique_id=286203177]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer2/Toolbar" unique_id=815953894]
+layout_mode = 2
+theme = ExtResource("12_jhx03")
+
+[node name="Frame" type="PanelContainer" parent="HUD/PanelContainer2/Toolbar/VBoxContainer" unique_id=316458695]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pm21f")
+
+[node name="Icon" type="TextureRect" parent="HUD/PanelContainer2/Toolbar/VBoxContainer/Frame" unique_id=768447186]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_2lf6f")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="LabelCost" type="Label" parent="HUD/PanelContainer2/Toolbar/VBoxContainer" unique_id=197813242]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "1"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/PanelContainer2/Toolbar" unique_id=1308112679]
+layout_mode = 2
+theme = ExtResource("12_jhx03")
+
+[node name="Frame" type="PanelContainer" parent="HUD/PanelContainer2/Toolbar/VBoxContainer2" unique_id=1407155763]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pm21f")
+
+[node name="Icon" type="TextureRect" parent="HUD/PanelContainer2/Toolbar/VBoxContainer2/Frame" unique_id=808714537]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_7iits")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="LabelCost" type="Label" parent="HUD/PanelContainer2/Toolbar/VBoxContainer2" unique_id=127053572]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "2"
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HUD/PanelContainer2/Toolbar" unique_id=2048197521]
+layout_mode = 2
+theme = ExtResource("12_jhx03")
+
+[node name="Frame" type="PanelContainer" parent="HUD/PanelContainer2/Toolbar/VBoxContainer3" unique_id=349300896]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pm21f")
+
+[node name="Icon" type="TextureRect" parent="HUD/PanelContainer2/Toolbar/VBoxContainer3/Frame" unique_id=2069981253]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_oo54l")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="LabelCost" type="Label" parent="HUD/PanelContainer2/Toolbar/VBoxContainer3" unique_id=983892115]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "3"
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="HUD/PanelContainer2/Toolbar" unique_id=1558720969]
+layout_mode = 2
+theme = ExtResource("12_jhx03")
+
+[node name="Frame" type="PanelContainer" parent="HUD/PanelContainer2/Toolbar/VBoxContainer4" unique_id=281219376]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pm21f")
+
+[node name="Icon" type="TextureRect" parent="HUD/PanelContainer2/Toolbar/VBoxContainer4/Frame" unique_id=1064299734]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_kpybi")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="LabelCost" type="Label" parent="HUD/PanelContainer2/Toolbar/VBoxContainer4" unique_id=163280498]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "4"
+horizontal_alignment = 1

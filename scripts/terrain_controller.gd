@@ -43,8 +43,7 @@ func bind(data: TerrainData, renderer: TerrainRenderer, artifacts: ArtifactData)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and TOOL_KEYS.has(event.keycode):
-		tool = TOOL_KEYS[event.keycode]
-		tool_changed.emit(tool)
+		select_tool(TOOL_KEYS[event.keycode])
 		return
 	if event is not InputEventMouseButton or event.button_index != MOUSE_BUTTON_LEFT:
 		return
@@ -52,6 +51,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		_press(_renderer.cell_at_global(get_global_mouse_position()))
 	else:
 		_locked_level = NOT_DIGGING
+
+# The one way the tool in hand changes, whether it was a number key or the toolbar that
+# asked. Silent when it's already the one in hand, so nothing has to guard against being
+# told twice.
+func select_tool(new_tool: ToolType.Type) -> void:
+	if tool == new_tool:
+		return
+	tool = new_tool
+	tool_changed.emit(tool)
 
 func _process(delta: float) -> void:
 	if _locked_level != NOT_DIGGING:

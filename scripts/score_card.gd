@@ -4,6 +4,11 @@ class_name ScoreCard extends Node
 # that sum is the bar's far end — and from then on this only watches: terrain and
 # artifact signals tell it what came to light and what got wrecked. Nothing calls into
 # it, so no tool or controller can forget to keep the score.
+#
+# Progress and damage are two different books. The bar asks how much of what's down there
+# has come to light, and a site can always be finished: breaking a find lowers what the
+# site is worth rather than putting 100% out of reach. What carelessness costs is money,
+# and that's `damaged` and the payout's business.
 
 signal changed
 
@@ -17,7 +22,9 @@ const SCUFF_POINTS := 1
 # than ignorance, so smashing through a ruin is worse than walking away from one.
 const DAMAGE_MULTIPLIER := 2
 
-# The full value of the site, fixed at bind. Progress is discovered against this.
+# What the site is worth, priced at bind. Progress is discovered against this — and it's
+# not fixed: a find knocked into its damaged form is worth less than it was, so the site
+# is too, and the bar's far end comes down with it.
 var total := 0
 var discovered := 0
 var damaged := 0
@@ -53,10 +60,15 @@ func bind(terrain: TerrainData, artifacts: ArtifactData, controller: TerrainCont
 func fraction() -> float:
 	return float(discovered) / total if total > 0 else 0.0
 
-# What the level pays when the player calls it done. Damage is charged at a premium, so
-# a careless dig can be worth less than a shallow one.
+# What the damage will cost in coins, charged at a premium so a careless dig can be worth
+# less than a shallow one. The HUD counts it up as the dig goes and the payout takes it
+# off at the end — one number, so the two can't tell the player different things.
+func penalty() -> int:
+	return damaged * DAMAGE_MULTIPLIER
+
+# What the level pays when the player calls it done.
 func payout() -> int:
-	return maxi(0, discovered - damaged * DAMAGE_MULTIPLIER)
+	return maxi(0, discovered - penalty())
 
 func _price_structure(placed: TerrainData.PlacedStructure) -> void:
 	var structure := placed.structure
@@ -128,8 +140,11 @@ func _on_artifact_taken(artifact: ArtifactData.Artifact) -> void:
 	discovered += artifact.value
 	changed.emit()
 
-# The knocked-off value shows up as damage, and since the find now pays its lower price,
-# the bar can no longer reach the top — a careless dig leaves a visible dent.
+# The knocked-off value comes off the site's worth as well as showing up as damage: the
+# find pays its lower price from now on, so that's what the whole dig is now worth and a
+# clean job on what's left still finishes the bar. The careless swing is paid for in the
+# payout, not in a ceiling the player can never reach.
 func _on_artifact_degraded(_artifact: ArtifactData.Artifact, lost: int) -> void:
+	total -= lost
 	damaged += lost
 	changed.emit()

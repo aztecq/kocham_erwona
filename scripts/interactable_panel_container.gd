@@ -11,17 +11,22 @@ class_name InteractablePanelContainer extends PanelContainer
 signal pressed()
 
 func _ready() -> void:
-	mouse_filter = MOUSE_FILTER_STOP
-	_let_mouse_through(self)
+	claim_mouse(self)
 
-# Nothing inside is clickable on its own, so the mouse always lands on the panel itself.
+# Nothing inside is clickable on its own, so the mouse always lands on `control` itself.
 # Done in code rather than node by node in the editor: it holds for whatever gets added
-# to one of these later, and there's no per-node flag to forget.
-func _let_mouse_through(node: Node) -> void:
+# to one of these later, and there's no per-node flag to forget. Static, because a panel
+# put together in another scene — a toolbar slot, say — needs the same thing said about
+# it without being one of these.
+static func claim_mouse(control: Control) -> void:
+	control.mouse_filter = Control.MOUSE_FILTER_STOP
+	_ignore_below(control)
+
+static func _ignore_below(node: Node) -> void:
 	for child in node.get_children():
 		if child is Control:
-			child.mouse_filter = MOUSE_FILTER_IGNORE
-		_let_mouse_through(child)
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_ignore_below(child)
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
