@@ -9,3 +9,9 @@ func _on_start_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
 	$SFX.play()
 	get_tree().quit()
+	
+	
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_6:
+			$CanvasLayer/Mammon3.visible = true

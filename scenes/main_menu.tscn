@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dkgub3211xthx" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Shader" uid="uid://fdcjhce34gjb" path="res://scenes/world.gdshader" id="2_ekxnf"]
 [ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://bjk1mvef1t7rg" path="res://images/Mammon_3.webp" id="3_wu84c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekxnf"]
 shader = ExtResource("2_ekxnf")
@@ -29,7 +30,7 @@ offset_left = -7.0
 offset_top = 116.0
 offset_right = 1143.0
 offset_bottom = 200.0
-text = "MENU GŁÓWNE"
+text = "CHILL ARCHEOLOGY"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="." unique_id=1307255316]
@@ -66,6 +67,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Mammon3" type="Sprite2D" parent="CanvasLayer" unique_id=1767259707]
+visible = false
+position = Vector2(505, 374)
+texture = ExtResource("3_wu84c")
 
 [node name="SFX" type="AudioStreamPlayer" parent="." unique_id=347949341]
 stream = ExtResource("3_bqqt6")
