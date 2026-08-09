@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bwwt2a52v1l1q"]
+
+[ext_resource type="Script" uid="uid://1b1hmbgkrvdm" path="res://Terra Nie ruszac/DestroyAfterTime.gd" id="1_iyn6t"]
+[ext_resource type="Texture2D" uid="uid://cvgyd6v8en5q8" path="res://Terra Nie ruszac/grave.png" id="1_wqhpp"]
+[ext_resource type="Script" uid="uid://du6qlh4t7y2kf" path="res://Terra Nie ruszac/Angle.gd" id="2_iyn6t"]
+[ext_resource type="Texture2D" uid="uid://cda1v6q3uitfs" path="res://Terra Nie ruszac/angle.png" id="3_5ygkw"]
+
+[node name="Grave" type="Node2D" unique_id=2014857070]
+script = ExtResource("1_iyn6t")
+
+[node name="chuj1" type="Sprite2D" parent="." unique_id=1369699739]
+texture = ExtResource("1_wqhpp")
+
+[node name="angle" type="Node2D" parent="." unique_id=346997175]
+
+[node name="chuj" type="Sprite2D" parent="angle" unique_id=2119612975]
+texture = ExtResource("3_5ygkw")
+script = ExtResource("2_iyn6t")

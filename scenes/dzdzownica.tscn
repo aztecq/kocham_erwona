@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c6lh8e0052teg"]
 
 [ext_resource type="Script" uid="uid://dhhx8c22xank2" path="res://scenes/dzdzownica.gd" id="1_k2plb"]
+[ext_resource type="PackedScene" uid="uid://bwwt2a52v1l1q" path="res://Terra Nie ruszac/grave.tscn" id="2_gimus"]
 [ext_resource type="Texture2D" uid="uid://buk3uu5opm0qb" path="res://Terra Nie ruszac/wormik sztormik.png" id="2_k2plb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gimus"]
@@ -65,6 +66,7 @@ animations = [{
 [node name="Dzdzownica" type="Area2D" unique_id=1583836344]
 texture_filter = 1
 script = ExtResource("1_k2plb")
+grave = ExtResource("2_gimus")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=936209484]
 sprite_frames = SubResource("SpriteFrames_kaa7c")
