@@ -141,9 +141,10 @@ func _efficiency_at(cell: Vector2i) -> float:
 # One dig, plus its consequence: if it brought a find into the open, anything but the
 # brush knocks the find into its damaged form on the way out of the ground.
 func _dig_cell(cell: Vector2i) -> void:
-	if _data.dig(cell) == TileTypes.Type.NONE:
+	var dug_type = _data.dig(cell)
+	if dug_type == TileTypes.Type.NONE:
 		return
-	if _data.dig(cell) == TileTypes.Type.BRICKS1:
+	if dug_type == TileTypes.Type.BRICKS1:
 		$"../RocksSFX".play()
 	else:
 		$"../DirtSFX".play()

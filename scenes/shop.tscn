@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3v7u514fwhtg"]
 
-[ext_resource type="Script" uid="uid://dor1axthqsrpw" path="res://scripts/sklepito.gd" id="1_sklep"]
+[ext_resource type="Script" uid="uid://dor1axthqsrpw" path="res://scripts/shop.gd" id="1_sklep"]
 [ext_resource type="AudioStream" uid="uid://bvgdjqmpat5ol" path="res://sound/buttonsfx.mp3" id="2_mjyt0"]
 
 [node name="Sklepito" type="Node2D" unique_id=34280308]

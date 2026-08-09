@@ -32,8 +32,8 @@ const CATALOGUE := [
 	# The coins spell one word between them. Priced as a middling find each, and rare
 	# enough that seeing all five in one run means something.
 	{file = "Moneta e.png", value = 18, weight = 2},
-	{file = "Moneta r.png", value = 18, weight = 2},
 	{file = "Moneta w.png", value = 18, weight = 2},
+	{file = "Moneta r.png", value = 18, weight = 2},
 	{file = "Moneta o.png", value = 18, weight = 2},
 	{file = "Moneta n.png", value = 18, weight = 2},
 

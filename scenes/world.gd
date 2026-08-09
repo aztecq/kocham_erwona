@@ -172,6 +172,6 @@ func _summary() -> void:
 		$ButtonSFX.play()
 		Wallet.add(payout)
 		Run.advance()
-		get_tree().change_scene_to_file("res://scenes/sklepito.tscn")
+		get_tree().change_scene_to_file("res://scenes/shop.tscn")
 	)
 	box.add_child(to_shop)
